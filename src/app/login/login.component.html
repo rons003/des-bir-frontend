@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="card" style="width: 70rem;" style="margin-top: 5rem;">
+            <div class="card-body">
+                <!-- <div class="text-center" style="margin-bottom: 1rem;">
+                    <img src="assets/img/des_logo.png" class="img-fluid" width="480px" height="280px"/>
+                </div> -->
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <!-- <div *ngIf="error" class="alert alert-danger">{{error}}</div> -->
+                    <div class="mb-3">
+                        <label class="form-label">Database</label>
+                        <select class="form-select" formControlName="company">
+                            <option value="desihofcbir">DES-INC BIR</option>
+                            <option value="desmhofcbir">DES-MARKETING BIR</option>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" formControlName="username">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" formControlName="password">
+                    </div>
+                    <!-- <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input">
+                        <label class="form-check-label">Show Password</label>
+                    </div> -->
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

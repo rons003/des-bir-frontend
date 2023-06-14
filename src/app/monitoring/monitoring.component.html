@@ -1,0 +1,97 @@
+<div class="card">
+    <div class="card-body">
+        <h6>Monitoring</h6>
+        <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
+                <label for="ttype" class="form-label">Transaction Type</label>
+                <select class="form-control form-control-sm" id="ttype">
+                    <option>All</option>
+                    <option>AP Invoice</option>
+                    <option>Incoming Payment</option>
+                </select>
+            </div>
+            <div class="p-2 bd-highlight">
+                <label for="search" class="form-label">From</label>
+                <div class="input-group input-group-sm">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="dpFrom" ngbDatepicker
+                        #dpF="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dpF.toggle()"
+                        type="button"></button>
+                </div>
+            </div>
+            <div class="p-2 bd-highlight">
+                <label class="form-label">To</label>
+                <div class="input-group input-group-sm">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="dpTo" ngbDatepicker
+                        #dpT="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dpT.toggle()"
+                        type="button"></button>
+                </div>
+            </div>
+            <div class="p-2 bd-highlight">
+                <label for="search" class="form-label">Filter</label>
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control form-control-sm" id="search" placeholder="Search">
+                    <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight">
+            <button type="button" class="btn btn-primary btn-sm" style="width: 100px;" (click)="openXl(content)">
+                <i class="bi bi-file-earmark-plus"></i> New</button>
+        </div>
+
+        <table class="table table-sm" style="margin-top: 12px;">
+            <thead class="table-dark">
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Date</th>
+                    <th>Document No.</th>
+                    <th>Base Reference</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Batch Upload</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect">
+                        <option value="1">A/P Downpayment Invoice</option>
+                        <option value="2">A/P Invoice</option>
+                        <option value="3">Incoming Payment</option>
+                        <option value="4">Journal Entry</option>
+                        <option value="5">Outgoing Payment</option>
+                    </select>
+                    <label for="floatingSelect">Transaction Type</label>
+                </div>
+             
+            </div>
+            <div class="col-sm-8">
+                <table class="table table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th></th>
+                            <th>Document No.</th>
+                            <th>Date</th>
+                            <th>Transaction Type</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm">Upload</button>
+        <button type="button" class="btn btn-light btn-sm" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
