@@ -9,13 +9,13 @@ const routes: Routes = [
   {
     path: '',
     component: MonitoringComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { title: 'Monitoring Page' }
   },
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [LoginGuard],
+    // canActivate: [LoginGuard],
     data: {
       title: 'Login Page'
     }
