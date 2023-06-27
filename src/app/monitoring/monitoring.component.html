@@ -47,8 +47,8 @@
                 <tr>
                     <th>Transaction Type</th>
                     <th>Date</th>
-                    <th>Document No.</th>
-                    <th>Base Reference</th>
+                    <th>External Doc No.</th>
+                    <th>Internal Reference</th>
                     <th>Total Amount</th>
                 </tr>
             </thead>
@@ -63,9 +63,15 @@
                     <td>
                         {{ transaction.docDate | date: 'yyyy-MM-dd' }}
                     </td>
-                    <td>{{ transaction.docNum }}</td>
-                    <td>{{ transaction.birReference }}</td>
-                    <td>{{ transaction.docTotal | number: '1.2-2' }}</td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm">{{ transaction.docNum
+                            }}</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm">{{ transaction.birReference
+                            }}</button>
+                    </td>
+                    <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
                 </tr>
             </tbody>
         </table>
@@ -100,7 +106,7 @@
                                     <input *ngIf="birTransactions.length > 0" class="form-check-input" type="checkbox"
                                         [(ngModel)]="checkAll" (ngModelChange)="onCheckAll()">
                                 </th>
-                                <th>Document No.</th>
+                                <th>Internal Doc No.</th>
                                 <th>Transaction Type</th>
                                 <th>Date</th>
                                 <th>Total</th>

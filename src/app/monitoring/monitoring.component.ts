@@ -156,7 +156,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   openXl(content: any) {
+    this.birTransactions = [];
     this.transactionType = 204;
+    this.checkAll = true;
+    this.getBIRTransactions();
     this.modalService.open(content, { size: 'xl', backdrop: 'static' });
   }
 
