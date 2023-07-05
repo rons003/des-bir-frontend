@@ -14,13 +14,15 @@ import { LoginComponent } from './login/login.component';
 import { API_BASE_URL } from './core/api.client.generated';
 import { environment } from '../environments/environment';
 import { Service } from './core/api.client.generated';
+import { ViewApInvoiceComponent } from './shared/view-ap-invoice/view-ap-invoice.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     MonitoringComponent,
-    LoginComponent
+    LoginComponent,
+    ViewApInvoiceComponent
   ],
   imports: [
     BrowserModule,

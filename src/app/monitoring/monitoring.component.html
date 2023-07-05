@@ -63,10 +63,16 @@
                     <td>
                         {{ transaction.docDate | date: 'yyyy-MM-dd' }}
                     </td>
+
                     <td>
-                        <button type="button" class="btn btn-link btn-sm">{{ transaction.docNum
-                            }}</button>
+                        <ng-template [ngIf]="transaction.objType == 18">
+                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
+                                (click)="openViewApInvoiceModal(transaction.docNum)" >{{
+                                    transaction.docNum
+                                }}</button></th>
+                        </ng-template>
                     </td>
+
                     <td>
                         <button type="button" class="btn btn-link btn-sm">{{ transaction.birReference
                             }}</button>

@@ -206,6 +206,57 @@ export class Service {
         }
         return _observableOf(null as any);
     }
+    bir_data(objType: number, id: number): Observable<BIRData> {
+        let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactionsID?";
+        if (objType !== undefined && objType !== null)
+            url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+            url_ += "id="+ encodeURIComponent("" + id);
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelivery(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelivery(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<BIRData>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<BIRData>;
+        }));
+    }
+
+    protected processDelivery(response: HttpResponseBase): Observable<BIRData> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = BIRData.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 
     /**
      * @param body (optional) 
@@ -565,4 +616,240 @@ function blobToText(blob: any): Observable<string> {
             reader.readAsText(blob);
         }
     });
+}
+export class BIRDataDetails implements IBIRDataDetails {
+    objType?: string | undefined;
+    docEntry?: number | undefined;
+    lineNum?: number | undefined;
+    uaddDescription?: string | undefined;
+    uitemCode?: string | undefined;
+    branch?: string | undefined;
+    itemCode?: string | undefined;
+    description?: string | undefined;
+    equipment?: string | undefined;
+    vatGroup?: string | undefined;
+    quantity?: number | undefined;
+    uoMCode?: string | undefined;
+    discount?: number | undefined;
+    unitPrice?: number | undefined;
+    lineTotal?: number | undefined;
+    grossPrice?: number | undefined;
+    grossTotal?: number | undefined;
+    serialItem?:string | undefined;
+    chasisItem?:string | undefined;
+    employeeName?:string | undefined;
+    aPsupport?:string | undefined;
+    acctcode?:string | undefined;
+    srp?:number | undefined;
+
+    constructor(data?: IBIRDataDetails) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.objType = _data["objType"];
+            this.docEntry = _data["docEntry"];
+            this.lineNum = _data["lineNum"];
+            this.uaddDescription = _data["uaddDescription"];
+            this.uitemCode = _data["uitemCode"];
+            this.branch = _data["branch"];
+            this.itemCode = _data["itemCode"];
+            this.description = _data["description"];
+            this.equipment = _data["equipment"];
+            this.vatGroup = _data["vatGroup"];
+            this.quantity = _data["quantity"];
+            this.uoMCode = _data["uoMCode"];
+            this.discount = _data["discount"];
+            this.unitPrice = _data["unitPrice"];
+            this.lineTotal = _data["lineTotal"];
+            this.grossPrice = _data["grossPrice"];
+            this.grossTotal = _data["grossTotal"];
+            this.serialItem = _data["serialItem"];
+            this.chasisItem = _data["chasisItem"];
+            this.employeeName = _data["employeeName"];
+            this.aPsupport = _data["aPsupport"];
+            this.acctcode = _data["acctcode"];
+            this.srp = _data["srp"];
+
+        }
+    }
+
+    static fromJS(data: any): BIRDataDetails {
+        data = typeof data === 'object' ? data : {};
+        let result = new BIRDataDetails();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["objType"] = this.objType;
+        data["docEntry"] = this.docEntry;
+        data["lineNum"] = this.lineNum;
+        data["uaddDescription"] = this.uaddDescription;
+        data["uitemCode"] = this.uitemCode;
+        data["branch"] = this.branch;
+        data["itemCode"] = this.itemCode;
+        data["description"] = this.description;
+        data["equipment"] = this.equipment;
+        data["vatGroup"] = this.vatGroup;
+        data["quantity"] = this.quantity;
+        data["uoMCode"] = this.uoMCode;
+        data["discount"] = this.discount;
+        data["unitPrice"] = this.unitPrice;
+        data["lineTotal"] = this.lineTotal;
+        data["grossPrice"] = this.grossPrice;
+        data["grossTotal"] = this.grossTotal;
+        data["serialItem"] = this.serialItem;
+        data["chasisItem"] = this.chasisItem;
+        data["employeeName"] = this.employeeName;
+        data["aPsupport"] = this.aPsupport;
+        data["acctcode"] = this.acctcode;
+        data["srp"] = this.srp;
+
+        return data;
+    }
+}
+export interface IBIRDataDetails {
+    objType?: string | undefined;
+    docEntry?: number | undefined;
+    lineNum?: number | undefined;
+    uaddDescription?: string | undefined;
+    uitemCode?: string | undefined;
+    branch?: string | undefined;
+    itemCode?: string | undefined;
+    description?: string | undefined;
+    equipment?: string | undefined;
+    vatGroup?: string | undefined;
+    quantity?: number | undefined;
+    uoMCode?: string | undefined;
+    discount?: number | undefined;
+    unitPrice?: number | undefined;
+    lineTotal?: number | undefined;
+    grossPrice?: number | undefined;
+    grossTotal?: number | undefined;
+    serialItem?:string | undefined;
+    chasisItem?:string | undefined;
+    employeeName?:string | undefined;
+    aPsupport?:string | undefined;
+    acctcode?:string | undefined;
+    srp?:number | undefined;
+    BranchName?:string | undefined;
+    
+}
+
+export class BIRData implements IBIRData {
+    docEntry?: number | undefined;
+    docNum?: number | undefined;
+    cardCode?: string | undefined;
+    cardName?: string | undefined;
+    branch?: number | undefined;
+    branchName?: string | undefined;
+    docDate?: Date | undefined;
+    docDueDate?: Date | undefined;
+    docTotal?: number | undefined;
+    vatSum?: number | undefined;
+    docStatus?: string | undefined;
+    comments?: string | undefined;
+    currency?: string | undefined;
+    address?: string | undefined;
+    numAtCard?: string | undefined;
+    birBaseRef?: string | undefined;
+    details?: BIRDataDetails[] | undefined;
+
+    constructor(data?: IBIRData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.docEntry = _data["docEntry"];
+            this.docNum = _data["docNum"];
+            this.cardCode = _data["cardCode"];
+            this.cardName = _data["cardName"];
+            this.branch = _data["branch"];
+            this.branchName = _data["branchName"];
+            this.docDate = _data["docDate"] ? new Date(_data["docDate"].toString()) : <any>undefined;
+            this.docDueDate = _data["docDueDate"] ? new Date(_data["docDueDate"].toString()) : <any>undefined;
+            this.docTotal = _data["docTotal"];
+            this.vatSum = _data["vatsum"];
+            this.docStatus = _data["docStatus"];
+            this.comments = _data["comments"];
+            this.currency = _data["currency"];
+            this.address = _data["address"];
+            this.numAtCard = _data["numAtCard"];
+            this.birBaseRef = _data["birBaseRef"];
+            if (Array.isArray(_data["details"])) {
+                this.details = [] as any;
+                for (let item of _data["details"])
+                    this.details!.push(BIRDataDetails.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): BIRData {
+        data = typeof data === 'object' ? data : {};
+        let result = new BIRData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["docEntry"] = this.docEntry;
+        data["docNum"] = this.docNum;
+        data["cardCode"] = this.cardCode;
+        data["cardName"] = this.cardName;
+        data["branch"] = this.branch;
+        data["branchName"] = this.branchName;
+        data["docDate"] = this.docDate ? this.docDate.toISOString() : <any>undefined;
+        data["docDueDate"] = this.docDueDate ? this.docDueDate.toISOString() : <any>undefined;
+        data["docTotal"] = this.docTotal;
+        data["vatsum"] = this.vatSum;
+        data["docStatus"] = this.docStatus;
+        data["comments"] = this.comments;
+        data["currency"] = this.currency;
+        data["address"] = this.address;
+        data["numAtCard"] = this.numAtCard;
+        data["birBaseRef"] = this.birBaseRef;
+        
+        if (Array.isArray(this.details)) {
+            data["details"] = [];
+            for (let item of this.details)
+                data["details"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IBIRData {
+    docEntry?: number | undefined;
+    docNum?: number | undefined;
+    cardCode?: string | undefined;
+    cardName?: string | undefined;
+    branch?: number | undefined;
+    branchName?: string | undefined;
+    docDate?: Date | undefined;
+    docDueDate?: Date | undefined;
+    docTotal?: number | undefined;
+    vatSum?: number | undefined;
+    docStatus?: string | undefined;
+    toWarehouse?: string | undefined;
+    comments?: string | undefined;
+    currency?: string | undefined;
+    address?: string | undefined;
+    numAtCard?: string | undefined;
+    birBaseRef?: string | undefined;
+    details?: BIRDataDetails[] | undefined;
 }
