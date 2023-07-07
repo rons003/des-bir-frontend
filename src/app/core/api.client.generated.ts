@@ -223,11 +223,11 @@ export class Service {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelivery(response_);
+            return this.processBirData(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDelivery(response_ as any);
+                    return this.processBirData(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<BIRData>;
                 }
@@ -236,7 +236,7 @@ export class Service {
         }));
     }
 
-    protected processDelivery(response: HttpResponseBase): Observable<BIRData> {
+    protected processBirData(response: HttpResponseBase): Observable<BIRData> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

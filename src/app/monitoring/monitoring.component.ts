@@ -4,6 +4,8 @@ import { Service } from '../core/api.client.generated';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ViewApInvoiceComponent } from '../shared/view-ap-invoice/view-ap-invoice.component';
+import { ViewApCreditMemoComponent } from '../shared/view-ap-credit-memo/view-ap-credit-memo.component';
+import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downpayment.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -191,8 +193,31 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       allowOutsideClick: false
     });
   }
+
+  openViewApDownPaymentModal(ap: number){
+    const modalRef = this.modalService.open(ViewApDownpaymentComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.docNum = ap;
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
   openViewApInvoiceModal(ap: number){
     const modalRef = this.modalService.open(ViewApInvoiceComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.docNum = ap;
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  openViewApCreditMemoModal(ap: number){
+    const modalRef = this.modalService.open(ViewApCreditMemoComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
     modalRef.result.then((result) => {
       if (result != 'close') {
