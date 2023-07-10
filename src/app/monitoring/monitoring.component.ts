@@ -70,7 +70,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     let transactions: number[] = [];
     const birTransactions = this.birTransactions.filter(key => key.selected == true);
     birTransactions.forEach((o: any) => {
-      transactions.push(o.docNum)
+      transactions.push(o.docEntry)
     });
 
     if (this.transactionType == 204) {
@@ -82,7 +82,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           res => {
             this.getBIRTransactions();
             Swal.close();
-            Swal.fire('Transaction Uploaded!', res.message, 'success');
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
           },
           error => {
             Swal.close();
@@ -98,7 +101,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           res => {
             this.getBIRTransactions();
             Swal.close();
-            Swal.fire('Transaction Uploaded!', res.message, 'success');
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
           },
           error => {
             Swal.close();
@@ -115,7 +121,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           res => {
             this.getBIRTransactions();
             Swal.close();
-            Swal.fire('Transaction Uploaded!', res.message, 'success');
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
           },
           error => {
             Swal.close();
