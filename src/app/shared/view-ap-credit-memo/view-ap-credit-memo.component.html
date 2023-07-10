@@ -1,0 +1,160 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">AP Credit Memo</h6>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>AP Credit Memo # :</th>
+                        <td>
+                            {{ birdata.docNum }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Vendor :</th>
+                        <td>
+                            {{ birdata.cardCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Name :</th>
+                        <td>
+                            {{ birdata.cardName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Vendor Ref #:</th>
+                        <td>
+                            {{ birdata.numAtCard }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>Status :</th>
+                        <td>
+                            {{ birdata.docStatus }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Posting Date :</th>
+                        <td>
+                            {{ birdata.docDate | date: 'yyyy-MM-dd' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                    <tr>
+                        <th>Document Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody> 
+                   
+                    <tr>
+                        <th>BIR Base Ref #:</th>
+                        <td>
+                            {{ birdata.birBaseRef }}
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Remarks :</th>
+                        <td>
+                            {{ birdata.comments }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="table-responsive" style="margin-bottom: 12px; height: 300px;">
+        <table class="table table-sm table-hover table-nowrap">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="text-end" width="5%">#</th>
+                    <th scope="col">Item No.</th>
+                    <th scope="col">Branch Item Code</th>
+                    <th scope="col" width="25%">Item Description</th>
+                    <th scope="col" width="25%">Additional Description</th>
+                    <th scope="col">Branch</th>
+                    <th scope="col">G/L Account</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">UoM</th>
+                    <th scope="col">Tax Code</th>
+                    <th scope="col">Serial</th>
+                    <th scope="col">Chasis</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">AP Support</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">SRP</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Gross Price</th>
+                    <th scope="col">Gross Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let detail of birdata.details; let i = index">
+                    <th class="text-end fw-bold">{{ i + 1 }}</th>
+                    <td>{{ detail.itemCode }}</td>
+                    <td>{{ detail.uitemCode }}</td>
+                    <td>{{ detail.description }}</td>
+                    <td>{{ detail.uaddDescription }}</td>
+                    <td>{{ detail.branch }}</td>
+                    <td>{{ detail.acctcode }}</td>
+                    <td class="text-end">{{ detail.quantity | number : '1.2-2'}}</td>
+                    <td>{{ detail.uoMCode }}</td>
+                    <td>{{ detail.vatGroup }}</td>
+                    <td>{{ detail.serialItem }}</td>
+                    <td>{{ detail.chasisItem }}</td>
+                    <td>{{ detail.employeeName }}</td>
+                    <td>{{ detail.aPsupport }}</td>
+                    <td class="text-end fw-bold">{{ detail.discount | number : '1.2-2' }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.srp | number : '1.2-2' }}</td>   
+                    <td class="text-end fw-bold">PHP {{ detail.unitPrice | number : '1.2-2' }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.lineTotal | number : '1.2-2' }}</td> 
+                    <td class="text-end fw-bold">PHP {{ detail.grossPrice | number : '1.2-2' }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>         
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row flex-row-reverse">
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>Tax</th>
+                        <td class="text-end fw-bold">
+                            PHP {{birdata.vatSum | number : '1.2-2'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Total Payment Due</th>
+                        <td class="text-end fw-bold">
+                            PHP {{birdata.docTotal | number : '1.2-2'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm">Print</button>
+    <button type="button" class="btn btn-light btn-sm" (click)="closeModal()">Close</button>
+</div>
+    

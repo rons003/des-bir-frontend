@@ -14,13 +14,19 @@ import { LoginComponent } from './login/login.component';
 import { API_BASE_URL } from './core/api.client.generated';
 import { environment } from '../environments/environment';
 import { Service } from './core/api.client.generated';
+import { ViewApInvoiceComponent } from './shared/view-ap-invoice/view-ap-invoice.component';
+import { ViewApCreditMemoComponent } from './shared/view-ap-credit-memo/view-ap-credit-memo.component';
+import { ViewApDownpaymentComponent } from './view-ap-downpayment/view-ap-downpayment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     MonitoringComponent,
-    LoginComponent
+    LoginComponent,
+    ViewApInvoiceComponent,
+    ViewApCreditMemoComponent,
+    ViewApDownpaymentComponent
   ],
   imports: [
     BrowserModule,
