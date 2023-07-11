@@ -38,8 +38,13 @@
                 <tbody>
                     <tr>
                         <th>Status :</th>
-                        <td>
-                            {{ birdata.docStatus }}
+                        <td> 
+                            <ng-template [ngIf]="birdata.docStatus == 'O'">
+                                <td> Open</td>
+                            </ng-template>
+                            <ng-template [ngIf]="birdata.docStatus == 'C'">
+                                <td> Closed</td>
+                            </ng-template>
                         </td>
                     </tr>
                     <tr>
@@ -63,12 +68,14 @@
             <table class="table table-sm table-hover table-header">
                 <tbody> 
                    
-                    <tr>
-                        <th>BIR Base Ref #:</th>
-                        <td>
-                            {{ birdata.birBaseRef }}
-                        </td>
-                    </tr>
+                    <ng-template [ngIf]="birdata.birBaseRef != null">
+                        <tr>
+                            <th>BIR Base Ref #:</th>
+                            <td>
+                                {{ birdata.birBaseRef }}
+                            </td>
+                        </tr>
+                    </ng-template>
                     
                     <tr>
                         <th>Remarks :</th>

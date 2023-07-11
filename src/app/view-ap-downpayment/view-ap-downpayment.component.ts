@@ -12,6 +12,7 @@ export class ViewApDownpaymentComponent implements OnInit {
   private ngUnsubscribe = new Subject<void>();
   birdata: BIRData = new BIRData;
   docNum: number = 0;
+  internal: boolean = false;
   transactionType = 204;
   constructor(private apiService: Service,
     private activeModal: NgbActiveModal) { }
@@ -20,7 +21,7 @@ export class ViewApDownpaymentComponent implements OnInit {
       this.getBIRData();
     }
     getBIRData(){
-      this.apiService.bir_data(this.transactionType,this.docNum)
+      this.apiService.bir_data(this.transactionType,this.docNum, this.internal)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )

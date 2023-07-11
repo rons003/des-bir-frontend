@@ -20,7 +20,7 @@ export class ViewApInvoiceComponent implements OnInit {
       this.getBIRData();
     }
     getBIRData(){
-      this.apiService.bir_data(this.transactionType,this.docNum)
+      this.apiService.bir_data(this.transactionType,this.docNum, true)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )

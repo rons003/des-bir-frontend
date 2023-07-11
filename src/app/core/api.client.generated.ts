@@ -206,13 +206,14 @@ export class Service {
         }
         return _observableOf(null as any);
     }
-    bir_data(objType: number, id: number): Observable<BIRData> {
+    bir_data(objType: number, id: number, internal: boolean): Observable<BIRData> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactionsID?";
         if (objType !== undefined && objType !== null)
             url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
-            url_ += "id="+ encodeURIComponent("" + id);
+            url_ += "id="+ encodeURIComponent("" + id)+ "&";
+        url_ += "Internal="+ encodeURIComponent("" + internal);
 
         let options_ : any = {
             observe: "response",

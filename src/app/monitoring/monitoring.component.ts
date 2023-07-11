@@ -203,9 +203,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     });
   }
 
-  openViewApDownPaymentModal(ap: number){
+  openViewApDownPaymentModal(ap: number, internal : boolean){
     const modalRef = this.modalService.open(ViewApDownpaymentComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
+    modalRef.componentInstance.internal = internal;
     modalRef.result.then((result) => {
       if (result != 'close') {
 
@@ -214,9 +215,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       console.log(error);
     });
   }
-  openViewApInvoiceModal(ap: number){
+  openViewApInvoiceModal(ap: number, internal : boolean){
     const modalRef = this.modalService.open(ViewApInvoiceComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
+    modalRef.componentInstance.internal = internal;
     modalRef.result.then((result) => {
       if (result != 'close') {
 
@@ -225,9 +227,10 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       console.log(error);
     });
   }
-  openViewApCreditMemoModal(ap: number){
+  openViewApCreditMemoModal(ap: number, internal : boolean){
     const modalRef = this.modalService.open(ViewApCreditMemoComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
+    modalRef.componentInstance.internal = internal;
     modalRef.result.then((result) => {
       if (result != 'close') {
 
