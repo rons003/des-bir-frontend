@@ -59,6 +59,7 @@
                         <ng-template [ngIf]="transaction.objType == 204">A/P Down Payment Invoice</ng-template>
                         <ng-template [ngIf]="transaction.objType == 18">A/P Invoice</ng-template>
                         <ng-template [ngIf]="transaction.objType == 19">A/P Credit Memo</ng-template>
+                        <ng-template [ngIf]="transaction.objType == 46">Outgoing Payments</ng-template>
                     </td>
                     <td>
                         {{ transaction.docDate | date: 'yyyy-MM-dd' }}
@@ -66,45 +67,63 @@
 
                     <td>
                         <ng-template [ngIf]="transaction.objType == 204">
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApDownPaymentModal(transaction.docNum, false)" >{{
-                                    transaction.docNum
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApDownPaymentModal(transaction.docNum, false)" >
+                                    {{transaction.docNum }} 
+                                </button>
+                            </th>
                         </ng-template>
 
                         <ng-template [ngIf]="transaction.objType == 18">
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApInvoiceModal(transaction.docNum, false)" >{{
-                                    transaction.docNum
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApInvoiceModal(transaction.docNum, false)" >
+                                    {{ transaction.docNum }}
+                                </button>
+                            </th>
                         </ng-template>
                         <ng-template [ngIf]="transaction.objType == 19">  
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApCreditMemoModal(transaction.docNum, false)" >{{
-                                    transaction.docNum
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApCreditMemoModal(transaction.docNum, false)" >
+                                    {{ transaction.docNum }}
+                                </button>
+                            </th>
+                        </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 46">  
+                            <th class="text-center">{{transaction.docNum}}</th>
                         </ng-template>
                     </td>
 
                     <td>
                         <ng-template [ngIf]="transaction.objType == 204">
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApDownPaymentModal(transaction.birReference, true)" >{{
-                                    transaction.birReference
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApDownPaymentModal(transaction.birReference, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
                         </ng-template>
 
                         <ng-template [ngIf]="transaction.objType == 18">
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApInvoiceModal(transaction.birReference, true)" >{{
-                                    transaction.birReference
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApInvoiceModal(transaction.birReference, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
                         </ng-template>
                         <ng-template [ngIf]="transaction.objType == 19">
-                            <th class="text-center"><button type="button" class="btn btn-link btn-sm"
-                                (click)="openViewApCreditMemoModal(transaction.birReference, true)" >{{
-                                    transaction.birReference
-                                }}</button></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewApCreditMemoModal(transaction.birReference, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
+                        </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 46">  
+                            <th class="text-center">{{transaction.docNum}}</th>
                         </ng-template>
                     </td>
                     <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
