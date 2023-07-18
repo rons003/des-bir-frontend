@@ -33,7 +33,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     { value: 19, label: 'A/P Credit Memo' },
     // { value: 24, label: 'Incoming Payments' },
     // { value: 30, label: 'Journal Entry' },
-    // { value: 46, label: 'Outgoing Payments' },
+    { value: 46, label: 'Outgoing Payments' },
   ];
   checkAll: boolean = true;
 
@@ -117,6 +117,27 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
     if (this.transactionType == 19) {
       this.apiService.addAPCM(transactions)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe(
+          res => {
+            this.getBIRTransactions();
+            Swal.close();
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
+          },
+          error => {
+            Swal.close();
+          }
+        );
+    }
+    
+    if (this.transactionType == 46) {
+      
+      this.apiService.addOutgoingPayments(transactions)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
