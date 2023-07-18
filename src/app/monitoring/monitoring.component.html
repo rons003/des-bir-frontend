@@ -92,7 +92,12 @@
                             </th>
                         </ng-template>
                         <ng-template [ngIf]="transaction.objType == 46">  
-                            <th class="text-center">{{transaction.docNum}}</th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewOutgoingPayments(transaction.docNum, false)" >
+                                    {{ transaction.docNum }}
+                                </button>
+                            </th>
                         </ng-template>
                     </td>
 
@@ -123,7 +128,12 @@
                             </th>
                         </ng-template>
                         <ng-template [ngIf]="transaction.objType == 46">  
-                            <th class="text-center">{{transaction.docNum}}</th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewOutgoingPayments(transaction.docNum, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
                         </ng-template>
                     </td>
                     <th>{{ transaction.docTotal | number: '1.2-2' }}</th>

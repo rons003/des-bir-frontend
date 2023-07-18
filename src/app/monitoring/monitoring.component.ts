@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ViewApInvoiceComponent } from '../shared/view-ap-invoice/view-ap-invoice.component';
 import { ViewApCreditMemoComponent } from '../shared/view-ap-credit-memo/view-ap-credit-memo.component';
 import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downpayment.component';
+import { ViewOutgoingPaymentsComponent } from '../shared/view-outgoing-payments/view-outgoing-payments.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -250,6 +251,18 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
   openViewApCreditMemoModal(ap: number, internal : boolean){
     const modalRef = this.modalService.open(ViewApCreditMemoComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.docNum = ap;
+    modalRef.componentInstance.internal = internal;
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  openViewOutgoingPayments(ap: number, internal : boolean){
+    const modalRef = this.modalService.open(ViewOutgoingPaymentsComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
     modalRef.componentInstance.internal = internal;
     modalRef.result.then((result) => {

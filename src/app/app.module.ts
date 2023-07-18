@@ -17,6 +17,7 @@ import { Service } from './core/api.client.generated';
 import { ViewApInvoiceComponent } from './shared/view-ap-invoice/view-ap-invoice.component';
 import { ViewApCreditMemoComponent } from './shared/view-ap-credit-memo/view-ap-credit-memo.component';
 import { ViewApDownpaymentComponent } from './view-ap-downpayment/view-ap-downpayment.component';
+import { ViewOutgoingPaymentsComponent } from './shared/view-outgoing-payments/view-outgoing-payments.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ViewApDownpaymentComponent } from './view-ap-downpayment/view-ap-downpa
     LoginComponent,
     ViewApInvoiceComponent,
     ViewApCreditMemoComponent,
-    ViewApDownpaymentComponent
+    ViewApDownpaymentComponent,
+    ViewOutgoingPaymentsComponent
   ],
   imports: [
     BrowserModule,
