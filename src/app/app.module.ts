@@ -18,6 +18,7 @@ import { ViewApInvoiceComponent } from './shared/view-ap-invoice/view-ap-invoice
 import { ViewApCreditMemoComponent } from './shared/view-ap-credit-memo/view-ap-credit-memo.component';
 import { ViewApDownpaymentComponent } from './view-ap-downpayment/view-ap-downpayment.component';
 import { ViewOutgoingPaymentsComponent } from './shared/view-outgoing-payments/view-outgoing-payments.component';
+import { ViewJournalEntryComponent } from './shared/view-journal-entry/view-journal-entry.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ViewOutgoingPaymentsComponent } from './shared/view-outgoing-payments/v
     ViewApInvoiceComponent,
     ViewApCreditMemoComponent,
     ViewApDownpaymentComponent,
-    ViewOutgoingPaymentsComponent
+    ViewOutgoingPaymentsComponent,
+    ViewJournalEntryComponent
   ],
   imports: [
     BrowserModule,

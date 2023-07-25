@@ -60,6 +60,7 @@
                         <ng-template [ngIf]="transaction.objType == 18">A/P Invoice</ng-template>
                         <ng-template [ngIf]="transaction.objType == 19">A/P Credit Memo</ng-template>
                         <ng-template [ngIf]="transaction.objType == 46">Outgoing Payments</ng-template>
+                        <ng-template [ngIf]="transaction.objType == 30">Journal Entry</ng-template>
                     </td>
                     <td>
                         {{ transaction.docDate | date: 'yyyy-MM-dd' }}
@@ -99,6 +100,14 @@
                                 </button>
                             </th>
                         </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 30">  
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewJournalEntry(transaction.docNum, false)" >
+                                    {{ transaction.docNum }}
+                                </button>
+                            </th>
+                        </ng-template>
                     </td>
 
                     <td>
@@ -130,7 +139,15 @@
                         <ng-template [ngIf]="transaction.objType == 46">  
                             <th class="text-center">
                                 <button type="button" class="btn btn-link btn-sm"
-                                    (click)="openViewOutgoingPayments(transaction.docNum, true)" >
+                                    (click)="openViewOutgoingPayments(transaction.birReference, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
+                        </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 30">  
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewJournalEntry(transaction.birReference, true)" >
                                     {{ transaction.birReference }}
                                 </button>
                             </th>

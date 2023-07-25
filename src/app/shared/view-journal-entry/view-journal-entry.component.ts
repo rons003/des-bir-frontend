@@ -4,16 +4,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { BIRData, Service } from 'src/app/core/api.client.generated';
 
 @Component({
-  selector: 'app-view-ap-invoice',
-  templateUrl: './view-ap-invoice.component.html',
-  styleUrls: ['./view-ap-invoice.component.scss']
+  selector: 'app-view-journal-entry',
+  templateUrl: './view-journal-entry.component.html',
+  styleUrls: ['./view-journal-entry.component.scss']
 })
-export class ViewApInvoiceComponent implements OnInit {
+export class ViewJournalEntryComponent implements OnInit {
   private ngUnsubscribe = new Subject<void>();
   birdata: BIRData = new BIRData;
   internal: boolean = false;
   docNum: number = 0;
-  transactionType = 18;
+  transactionType = 30;
   constructor(private apiService: Service,
     private activeModal: NgbActiveModal) { }
     
@@ -40,3 +40,4 @@ export class ViewApInvoiceComponent implements OnInit {
     }
 
 }
+

@@ -482,6 +482,58 @@ export class Service {
         }
         return _observableOf(null as any);
     }
+
+    addJournalEntry(body: number[] | null | undefined): Observable<Response> {
+        let url_ = this.baseUrl + "/api/BIRTransaction/addJournalEntry";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddJournalEntry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddJournalEntry(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Response>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Response>;
+        }));
+    }
+
+    protected processAddJournalEntry(response: HttpResponseBase): Observable<Response> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Response.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 export class Credentials implements ICredentials {
@@ -642,6 +694,9 @@ export class BIRDataDetails implements IBIRDataDetails {
     aPsupport?:string | undefined;
     acctcode?:string | undefined;
     srp?:number | undefined;
+    lineRemarks?:string | undefined;
+    postingDate?: Date | undefined;
+    dueDate?: Date | undefined;
 
     constructor(data?: IBIRDataDetails) {
         if (data) {
@@ -677,7 +732,9 @@ export class BIRDataDetails implements IBIRDataDetails {
             this.aPsupport = _data["aPsupport"];
             this.acctcode = _data["acctcode"];
             this.srp = _data["srp"];
-
+            this.lineRemarks = _data["lineRemarks"];
+            this.postingDate = _data["postingDate"];
+            this.dueDate = _data["dueDate"];
         }
     }
 
@@ -712,7 +769,10 @@ export class BIRDataDetails implements IBIRDataDetails {
         data["employeeName"] = this.employeeName;
         data["aPsupport"] = this.aPsupport;
         data["acctcode"] = this.acctcode;
-        data["srp"] = this.srp;
+        data["lineRemarks"] = this.lineRemarks;
+        data["postingDate"] = this.postingDate;
+        data["dueDate"] = this.dueDate;
+        
 
         return data;
     }
@@ -742,6 +802,9 @@ export interface IBIRDataDetails {
     acctcode?:string | undefined;
     srp?:number | undefined;
     BranchName?:string | undefined;
+    lineRemarks?:string | undefined;
+    postingDate?: Date | undefined;
+    dueDate?: Date | undefined;
     
 }
 
@@ -762,6 +825,7 @@ export class BIRData implements IBIRData {
     address?: string | undefined;
     numAtCard?: string | undefined;
     birBaseRef?: string | undefined;
+    transId?: number | undefined;
     details?: BIRDataDetails[] | undefined;
 
     constructor(data?: IBIRData) {
@@ -791,6 +855,7 @@ export class BIRData implements IBIRData {
             this.address = _data["address"];
             this.numAtCard = _data["numAtCard"];
             this.birBaseRef = _data["birBaseRef"];
+            this.transId = _data["transId"];
             if (Array.isArray(_data["details"])) {
                 this.details = [] as any;
                 for (let item of _data["details"])
@@ -824,6 +889,7 @@ export class BIRData implements IBIRData {
         data["address"] = this.address;
         data["numAtCard"] = this.numAtCard;
         data["birBaseRef"] = this.birBaseRef;
+        data["transId"] = this.transId;
         
         if (Array.isArray(this.details)) {
             data["details"] = [];
@@ -852,5 +918,6 @@ export interface IBIRData {
     address?: string | undefined;
     numAtCard?: string | undefined;
     birBaseRef?: string | undefined;
+    transId?: number | undefined;
     details?: BIRDataDetails[] | undefined;
 }
