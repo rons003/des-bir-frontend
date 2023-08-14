@@ -22,6 +22,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
   birTransactions: any[] = [];
   birTransactionsUploaded: any[] = [];
+  birValidation: any[] = [];
 
   dpFrom: NgbDateStruct | undefined;
   dpTo: NgbDateStruct | undefined;
@@ -72,12 +73,51 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   Upload() {
-    let transactions: number[] = [];
+    let transactions: number[] = [];     
     const birTransactions = this.birTransactions.filter(key => key.selected == true);
     birTransactions.forEach((o: any) => {
       transactions.push(o.docEntry)
-    });
 
+      if (this.transactionType == 46) {
+          this.apiService.bIRValidation(o.docEntry)
+          .pipe(
+            takeUntil(this.ngUnsubscribe)
+          )
+          .subscribe(
+            async res => {
+            this.birValidation = res;
+            if(this.birValidation.length == 1){
+
+              this.apiService.addOutgoingPayments(transactions)
+              .pipe(
+                takeUntil(this.ngUnsubscribe)
+              )
+              .subscribe(
+                res => {
+                  this.getBIRTransactions();
+                  Swal.close();
+                  if (res.status == 'success')
+                    Swal.fire('Transaction Uploaded!', res.message, 'success');
+                  else
+                    Swal.fire('Something Error!', res.message, 'error');
+                },
+                error => {
+                  Swal.close();
+                }
+              );
+            }else{
+              Swal.fire('Outgoing Details is not fully uploaded!', 'error');
+            }
+            
+          },
+          error => {
+            Swal.close();
+          });
+        }
+
+       
+    });
+    
     if (this.transactionType == 204) {
       this.apiService.addAPDPI(transactions)
         .pipe(
@@ -119,27 +159,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
     if (this.transactionType == 19) {
       this.apiService.addAPCM(transactions)
-        .pipe(
-          takeUntil(this.ngUnsubscribe)
-        )
-        .subscribe(
-          res => {
-            this.getBIRTransactions();
-            Swal.close();
-            if (res.status == 'success')
-              Swal.fire('Transaction Uploaded!', res.message, 'success');
-            else
-              Swal.fire('Something Error!', res.message, 'error');
-          },
-          error => {
-            Swal.close();
-          }
-        );
-    }
-    
-    if (this.transactionType == 46) {
-      
-      this.apiService.addOutgoingPayments(transactions)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
