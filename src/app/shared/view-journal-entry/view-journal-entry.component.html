@@ -1,1 +1,124 @@
-<p>view-journal-entry works!</p>
+<div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Journal Entry</h6>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>JE # :</th>
+                        <td>
+                            {{ birdata.docNum }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Posting Date :</th>
+                        <td>
+                            {{ birdata.docDate | date: 'yyyy-MM-dd' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>Origin :</th>
+                        <th>JE</th>
+                    </tr>
+                    <tr>
+                        <th>Origin # :</th>
+                        <td>
+                            {{ birdata.docNum }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Trans # :</th>
+                            {{ birdata.docNum }}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody> 
+                   
+                    <ng-template [ngIf]="birdata.birBaseRef != null">
+                        <tr>
+                            <th>BIR Base Ref #:</th>
+                            <td>
+                                {{ birdata.birBaseRef }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    
+                    <tr>
+                        <th>Remarks :</th>
+                        <td>
+                            {{ birdata.comments }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="table-responsive" style="margin-bottom: 12px; height: 300px;">
+        <table class="table table-sm table-hover table-nowrap">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="text-end" width="5%">#</th>
+                    <th scope="col">Employee</th>
+                    <th scope="col">G/L Acct/BpCode</th>
+                    <th scope="col">Control Account </th>
+                    <th scope="col" width="25%">G/L Acct/BpName</th>
+                    <th scope="col">Debit</th>
+                    <th scope="col">Credit</th>
+                    <th scope="col">Suggested Entry Type</th>
+                    <th scope="col">Suggested Entry Code</th>
+                    <th scope="col">Suggested Entry Desc</th>
+                    <th scope="col" width="25%">Remarks</th>
+                    <th scope="col" width="25%">Additional Remarks</th>
+                    <th scope="col">Deduction Type</th>
+                    <th scope="col">Posting Date</th>
+                    <th scope="col">Balance Due LC</th>
+                    <th scope="col">Balance Due SC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let detail of birdata.details; let i = index">
+                    <th class="text-end fw-bold">{{ i + 1 }}</th>
+                    <td>{{ detail.employee }}</td>
+                    <td>{{ detail.shortName }}</td>
+                    <td>{{ detail.acctcode }}</td>
+                    <td>{{ detail.bpName }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.debit | number : '1.2-2' }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.credit | number : '1.2-2' }}</td>
+                    <td>{{ detail.suggestEntryType }}</td>
+                    <td>{{ detail.suggestEntryCode }}</td>
+                    <td>{{ detail.suggestEntryDesc }}</td>
+                    <td>{{ detail.lineRemarks }}</td>
+                    <td>{{ detail.additionalRemarks }}</td>
+                    <td>{{ detail.deductionType }}</td>
+                    <td>{{ detail.postingDate }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.balanceDueLC | number : '1.2-2' }}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.balanceDueSC | number : '1.2-2' }}</td>         
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm">Print</button>
+    <button type="button" class="btn btn-light btn-sm" (click)="closeModal()">Close</button>
+</div>
+    

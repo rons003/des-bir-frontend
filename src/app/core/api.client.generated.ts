@@ -754,6 +754,18 @@ export class BIRDataDetails implements IBIRDataDetails {
     lineRemarks?:string | undefined;
     postingDate?: Date | undefined;
     dueDate?: Date | undefined;
+    debit?: number | undefined;
+    credit?: number | undefined;
+    bpName?:string | undefined;
+    employee?:string | undefined;
+    shortName?:string | undefined;
+    suggestEntryType?:string | undefined;
+    suggestEntryCode?: string | undefined;
+    suggestEntryDesc?:string | undefined;
+    additionalRemarks?:string | undefined;
+    deductionType?:string | undefined;
+    balanceDueLC?: number | undefined;
+    balanceDueSC?: number | undefined;
 
     constructor(data?: IBIRDataDetails) {
         if (data) {
@@ -792,6 +804,18 @@ export class BIRDataDetails implements IBIRDataDetails {
             this.lineRemarks = _data["lineRemarks"];
             this.postingDate = _data["postingDate"];
             this.dueDate = _data["dueDate"];
+            this.debit = _data["debit"];
+            this.credit = _data["credit"];
+            this.bpName = _data["bpName"];
+            this.suggestEntryType = _data["suggestEntryType"];
+            this.suggestEntryDesc = _data["suggestEntryDesc"];
+            this.suggestEntryCode = _data["suggestEntryCode"];
+            this.additionalRemarks = _data["additionalRemarks"];
+            this.deductionType = _data["deductionType"];
+            this.balanceDueLC = _data["balanceDueLC"];
+            this.balanceDueSC = _data["balanceDueSC"];
+            this.employee = _data["employee"];
+            this.shortName = _data["shortName"];
         }
     }
 
@@ -829,7 +853,18 @@ export class BIRDataDetails implements IBIRDataDetails {
         data["lineRemarks"] = this.lineRemarks;
         data["postingDate"] = this.postingDate;
         data["dueDate"] = this.dueDate;
-        
+        data["debit"] = this.debit;
+        data["credit"] = this.credit;
+        data["bpName"] = this.bpName;
+        data["suggestEntryType"] = this.suggestEntryType;
+        data["suggestEntryDesc"] = this.suggestEntryDesc;
+        data["suggestEntryCode"] = this.suggestEntryCode;
+        data["additionalRemarks"] = this.additionalRemarks;
+        data["deductionType"] = this.deductionType;
+        data["balanceDueLC"] = this.balanceDueLC;
+        data["balanceDueSC"] = this.balanceDueSC;
+        data["employee"] = this.employee;
+        data["shortName"] = this.shortName;
 
         return data;
     }
@@ -862,7 +897,18 @@ export interface IBIRDataDetails {
     lineRemarks?:string | undefined;
     postingDate?: Date | undefined;
     dueDate?: Date | undefined;
-    
+    debit?: number | undefined;
+    credit?: number | undefined;
+    bpName?:string | undefined;
+    employee?:string | undefined;
+    shortName?:string | undefined;
+    suggestEntryType?:string | undefined;
+    suggestEntryCode?: string | undefined;
+    suggestEntryDesc?:string | undefined;
+    additionalRemarks?:string | undefined;
+    deductionType?:string | undefined;
+    balanceDueLC?: number | undefined;
+    balanceDueSC?: number | undefined;
 }
 
 export class BIRData implements IBIRData {
@@ -883,6 +929,9 @@ export class BIRData implements IBIRData {
     numAtCard?: string | undefined;
     birBaseRef?: string | undefined;
     transId?: number | undefined;
+    ref1?: number | undefined;
+    ref2?: string | undefined;
+    ref3?: number | undefined;
     details?: BIRDataDetails[] | undefined;
 
     constructor(data?: IBIRData) {
@@ -913,6 +962,10 @@ export class BIRData implements IBIRData {
             this.numAtCard = _data["numAtCard"];
             this.birBaseRef = _data["birBaseRef"];
             this.transId = _data["transId"];
+            this.ref1 = _data["ref1"];
+            this.ref2 = _data["ref2"];
+            this.ref3 = _data["ref3"];
+            
             if (Array.isArray(_data["details"])) {
                 this.details = [] as any;
                 for (let item of _data["details"])
@@ -947,6 +1000,9 @@ export class BIRData implements IBIRData {
         data["numAtCard"] = this.numAtCard;
         data["birBaseRef"] = this.birBaseRef;
         data["transId"] = this.transId;
+        data["ref1"] = this.ref1;
+        data["ref2"] = this.ref2;
+        data["ref3"] = this.ref3;
         
         if (Array.isArray(this.details)) {
             data["details"] = [];
@@ -976,5 +1032,8 @@ export interface IBIRData {
     numAtCard?: string | undefined;
     birBaseRef?: string | undefined;
     transId?: number | undefined;
+    ref1?: number | undefined;
+    ref2?: string | undefined;
+    ref3?: number | undefined;
     details?: BIRDataDetails[] | undefined;
 }
