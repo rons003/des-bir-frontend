@@ -187,8 +187,13 @@
                                 <th scope="col" width="5%" class="text-center">
                                     <input *ngIf="birTransactions.length > 0" class="form-check-input" type="checkbox"
                                         [(ngModel)]="checkAll" (ngModelChange)="onCheckAll()">
-                                </th>
+                                </th>   
                                 <th>Internal Doc No.</th>
+                                <th>
+                                    <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
+                                        <td> OP Ref No.</td>
+                                    </ng-template>
+                                </th>
                                 <th>Transaction Type</th>
                                 <th>Date</th>
                                 <th>Total</th>
@@ -202,6 +207,11 @@
                                         [(ngModel)]="transaction.selected" (ngModelChange)="onCheck()">
                                 </td>
                                 <th>{{ transaction.docNum }}</th>
+                                <th>
+                                    <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
+                                        <td> {{ transaction.refno }}</td>
+                                    </ng-template>
+                                </th>
                                 <td>{{ transactionTypeName }}</td>
                                 <td>{{ transaction.docDate | date: 'yyyy-MM-dd' }}</td>
                                 <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
