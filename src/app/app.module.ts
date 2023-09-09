@@ -19,6 +19,7 @@ import { ViewApCreditMemoComponent } from './shared/view-ap-credit-memo/view-ap-
 import { ViewApDownpaymentComponent } from './view-ap-downpayment/view-ap-downpayment.component';
 import { ViewOutgoingPaymentsComponent } from './shared/view-outgoing-payments/view-outgoing-payments.component';
 import { ViewJournalEntryComponent } from './shared/view-journal-entry/view-journal-entry.component';
+import { ViewIncomingPaymentsComponent } from './shared/view-incoming-payments/view-incoming-payments.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ViewJournalEntryComponent } from './shared/view-journal-entry/view-jour
     ViewApCreditMemoComponent,
     ViewApDownpaymentComponent,
     ViewOutgoingPaymentsComponent,
-    ViewJournalEntryComponent
+    ViewJournalEntryComponent,
+    ViewIncomingPaymentsComponent
   ],
   imports: [
     BrowserModule,

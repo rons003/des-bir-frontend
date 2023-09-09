@@ -8,6 +8,7 @@ import { ViewApCreditMemoComponent } from '../shared/view-ap-credit-memo/view-ap
 import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downpayment.component';
 import { ViewOutgoingPaymentsComponent } from '../shared/view-outgoing-payments/view-outgoing-payments.component';
 import { ViewJournalEntryComponent } from '../shared/view-journal-entry/view-journal-entry.component';
+import { ViewIncomingPaymentsComponent } from '../shared/view-incoming-payments/view-incoming-payments.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -34,7 +35,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     { value: 204, label: 'A/P Down Payment Invoice' },
     { value: 18, label: 'A/P Invoice' },
     { value: 19, label: 'A/P Credit Memo' },
-    // { value: 24, label: 'Incoming Payments' },
+    { value: 24, label: 'Incoming Payments' },
     { value: 30, label: 'Journal Entry' },
     { value: 46, label: 'Outgoing Payments' },
   ];
@@ -176,7 +177,26 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
     }
-
+    if (this.transactionType == 24) {
+      
+      this.apiService.addIncommingPayments(transactions)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe(
+          res => {
+            this.getBIRTransactions();
+            Swal.close();
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
+          },
+          error => {
+            Swal.close();
+          }
+        );
+    }
     if (this.transactionType == 30) {
       
       this.apiService.addJournalEntry(transactions)
@@ -316,6 +336,18 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
   openViewJournalEntry(ap: number, internal : boolean){
     const modalRef = this.modalService.open(ViewJournalEntryComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.docNum = ap;
+    modalRef.componentInstance.internal = internal;
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  openViewIncomingPayments(ap: number, internal : boolean){
+    const modalRef = this.modalService.open(ViewIncomingPaymentsComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.docNum = ap;
     modalRef.componentInstance.internal = internal;
     modalRef.result.then((result) => {

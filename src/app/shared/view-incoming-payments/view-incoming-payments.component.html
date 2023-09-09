@@ -1,0 +1,118 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Incoming Payments</h6>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>Incoming Payments # :</th>
+                        <td>
+                            {{ birdata.docNum }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Code :</th>
+                        <td>
+                            {{ birdata.cardCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Name :</th>
+                        <td>
+                            {{ birdata.cardName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Bill To :</th>
+                        <td>
+                            {{ birdata.address }}
+                        </td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>
+                    <tr>
+                        <th>Posting Date :</th>
+                        <td>
+                            {{ birdata.docDate | date: 'yyyy-MM-dd' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                    <tr>
+                        <th>Doc. Date :</th>
+                        {{ birdata.docDueDate | date: 'yyyy-MM-dd' }}
+                    </tr>
+                    <tr>
+                        <th>Transaction # :</th>
+                        <td>
+                            {{ birdata.transId}}
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody> 
+                   
+                    <ng-template [ngIf]="birdata.birBaseRef != null">
+                        <tr>
+                            <th>BIR Base Ref #:</th>
+                            <td>
+                                {{ birdata.birBaseRef }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    
+                    <tr>
+                        <th>Remarks :</th>
+                        <td>
+                            {{ birdata.comments }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="table-responsive" style="margin-bottom: 12px; height: 300px;">
+        <table class="table table-sm table-hover table-nowrap">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="text-end" width="5%">#</th>
+                    <th scope="col">Branch</th>
+                    <th scope="col">G/L Account</th>
+                    <th scope="col">Net Amount</th>
+                    <th scope="col">Rebate</th>
+                    <th scope="col">Doc Remarks</th>
+                    <th scope="col">Entry Type</th>
+                    <th scope="col">BP/ Account Name</th>
+                    <th scope="col">Account Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let detail of birdata.details; let i = index">
+                    <th class="text-end fw-bold">{{ i + 1 }}</th>
+                    <td>{{ detail.branch }}</td>
+                    <td>{{ detail.acctcode}}</td>
+                    <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>     
+                    <td>{{ 0}}</td>    
+                    <td>{{ detail.uaddDescription }}</td>
+                    <!-- <td>{{ detail.entryType }}</td>     -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm">Print</button>
+    <button type="button" class="btn btn-light btn-sm" (click)="closeModal()">Close</button>
+</div>

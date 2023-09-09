@@ -61,6 +61,7 @@
                         <ng-template [ngIf]="transaction.objType == 19">A/P Credit Memo</ng-template>
                         <ng-template [ngIf]="transaction.objType == 46">Outgoing Payments</ng-template>
                         <ng-template [ngIf]="transaction.objType == 30">Journal Entry</ng-template>
+                        <ng-template [ngIf]="transaction.objType == 24">Incomming Payments</ng-template>
                     </td>
                     <td>
                         {{ transaction.docDate | date: 'yyyy-MM-dd' }}
@@ -104,6 +105,14 @@
                             <th class="text-center">
                                 <button type="button" class="btn btn-link btn-sm"
                                     (click)="openViewJournalEntry(transaction.docNum, false)" >
+                                    {{ transaction.docNum }}
+                                </button>
+                            </th>
+                        </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 24">  
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewIncomingPayments(transaction.docNum, false)" >
                                     {{ transaction.docNum }}
                                 </button>
                             </th>
@@ -152,13 +161,20 @@
                                 </button>
                             </th>
                         </ng-template>
+                        <ng-template [ngIf]="transaction.objType == 24">  
+                            <th class="text-center">
+                                <button type="button" class="btn btn-link btn-sm"
+                                    (click)="openViewIncomingPayments(transaction.birReference, true)" >
+                                    {{ transaction.birReference }}
+                                </button>
+                            </th>
+                        </ng-template>
                     </td>
                     <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
                 </tr>
             </tbody>
         </table>
-        <ngb-pagination [collectionSize]="birTransactionsUploaded.length" [(page)]="page" [maxSize]="10"
-            [boundaryLinks]="true">
+        <ngb-pagination [collectionSize]="birTransactionsUploaded.length" [(page)]="page" [maxSize]="10"[boundaryLinks]="true">
         </ngb-pagination>
     </div>
 </div>
