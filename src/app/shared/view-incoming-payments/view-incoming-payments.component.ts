@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
-import { IncomingPayments, Service } from 'src/app/core/api.client.generated';
+import { BIRData, Service } from 'src/app/core/api.client.generated';
 
 @Component({
   selector: 'app-view-incoming-payments',
@@ -11,7 +11,7 @@ import { IncomingPayments, Service } from 'src/app/core/api.client.generated';
 export class ViewIncomingPaymentsComponent implements OnInit {
 
   private ngUnsubscribe = new Subject<void>();
-  birdata: IncomingPayments = new IncomingPayments;
+  birdata: BIRData = new BIRData;
   internal: boolean = false;
   docNum: number = 0;
   transactionType = 24;

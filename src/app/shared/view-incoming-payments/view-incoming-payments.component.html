@@ -90,6 +90,7 @@
                     <th scope="col" class="text-end" width="5%">#</th>
                     <th scope="col">Branch</th>
                     <th scope="col">G/L Account</th>
+                    <th scope="col">Account Name</th>
                     <th scope="col">Net Amount</th>
                     <th scope="col">Rebate</th>
                     <th scope="col">Doc Remarks</th>
@@ -103,10 +104,13 @@
                     <th class="text-end fw-bold">{{ i + 1 }}</th>
                     <td>{{ detail.branch }}</td>
                     <td>{{ detail.acctcode}}</td>
+                    <td>{{ detail.acctName}}</td>   
                     <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>     
-                    <td>{{ 0}}</td>    
+                    <td>{{ detail.rebate}}</td>    
                     <td>{{ detail.uaddDescription }}</td>
-                    <!-- <td>{{ detail.entryType }}</td>     -->
+                    <td>{{ detail.entryType }}</td>    
+                    <td>{{ detail.bpName }}</td>    
+                    <td>{{ detail.uCode }}</td>  
                 </tr>
             </tbody>
         </table>

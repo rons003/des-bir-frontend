@@ -816,6 +816,10 @@ export class BIRDataDetails implements IBIRDataDetails {
     deductionType?:string | undefined;
     balanceDueLC?: number | undefined;
     balanceDueSC?: number | undefined;
+    rebate: number | undefined;
+    entryType: string | undefined;
+    uCode: string | undefined;
+    acctName: string | undefined;
 
     constructor(data?: IBIRDataDetails) {
         if (data) {
@@ -866,6 +870,10 @@ export class BIRDataDetails implements IBIRDataDetails {
             this.balanceDueSC = _data["balanceDueSC"];
             this.employee = _data["employee"];
             this.shortName = _data["shortName"];
+            this.rebate = _data["rebate"];
+            this.entryType = _data["uenttype"];
+            this.acctName = _data["acctName"];
+            this.uCode = _data["ucode"];
         }
     }
 
@@ -915,6 +923,10 @@ export class BIRDataDetails implements IBIRDataDetails {
         data["balanceDueSC"] = this.balanceDueSC;
         data["employee"] = this.employee;
         data["shortName"] = this.shortName;
+        data["rebate"] = this.rebate;
+        data["acctName"] = this.acctName;
+        data["uenttype"] = this.entryType;
+        data["ucode"] = this.uCode;
 
         return data;
     }
@@ -959,6 +971,10 @@ export interface IBIRDataDetails {
     deductionType?:string | undefined;
     balanceDueLC?: number | undefined;
     balanceDueSC?: number | undefined;
+    rebate: number | undefined;
+    entryType: string | undefined;
+    uCode: string | undefined;
+    acctName: string | undefined;
 }
 
 export class BIRData implements IBIRData {
@@ -1088,309 +1104,3 @@ export interface IBIRData {
     details?: BIRDataDetails[] | undefined;
 }
 
-//Incoming Payments
-export class IncomingPaymentsDetails implements IIncomingPaymentsDetails {
-    objType?: string | undefined;
-    docEntry?: number | undefined;
-    lineNum?: number | undefined;
-    uaddDescription?: string | undefined;
-    uitemCode?: string | undefined;
-    branch?: string | undefined;
-    itemCode?: string | undefined;
-    description?: string | undefined;
-    equipment?: string | undefined;
-    vatGroup?: string | undefined;
-    quantity?: number | undefined;
-    uoMCode?: string | undefined;
-    discount?: number | undefined;
-    unitPrice?: number | undefined;
-    lineTotal?: number | undefined;
-    grossPrice?: number | undefined;
-    grossTotal?: number | undefined;
-    serialItem?:string | undefined;
-    chasisItem?:string | undefined;
-    employeeName?:string | undefined;
-    aPsupport?:string | undefined;
-    acctcode?:string | undefined;
-    srp?:number | undefined;
-    lineRemarks?:string | undefined;
-    postingDate?: Date | undefined;
-    dueDate?: Date | undefined;
-    debit?: number | undefined;
-    credit?: number | undefined;
-    bpName?:string | undefined;
-    employee?:string | undefined;
-    shortName?:string | undefined;
-    suggestEntryType?:string | undefined;
-    suggestEntryCode?: string | undefined;
-    suggestEntryDesc?:string | undefined;
-    additionalRemarks?:string | undefined;
-    deductionType?:string | undefined;
-    balanceDueLC?: number | undefined;
-    balanceDueSC?: number | undefined;
-
-    constructor(data?: IIncomingPaymentsDetails) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.objType = _data["objType"];
-            this.docEntry = _data["docEntry"];
-            this.lineNum = _data["lineNum"];
-            this.uaddDescription = _data["uaddDescription"];
-            this.uitemCode = _data["uitemCode"];
-            this.branch = _data["branch"];
-            this.itemCode = _data["itemCode"];
-            this.description = _data["description"];
-            this.equipment = _data["equipment"];
-            this.vatGroup = _data["vatGroup"];
-            this.quantity = _data["quantity"];
-            this.uoMCode = _data["uoMCode"];
-            this.discount = _data["discount"];
-            this.unitPrice = _data["unitPrice"];
-            this.lineTotal = _data["lineTotal"];
-            this.grossPrice = _data["grossPrice"];
-            this.grossTotal = _data["grossTotal"];
-            this.serialItem = _data["serialItem"];
-            this.chasisItem = _data["chasisItem"];
-            this.employeeName = _data["employeeName"];
-            this.aPsupport = _data["aPsupport"];
-            this.acctcode = _data["acctcode"];
-            this.srp = _data["srp"];
-            this.lineRemarks = _data["lineRemarks"];
-            this.postingDate = _data["postingDate"];
-            this.dueDate = _data["dueDate"];
-            this.debit = _data["debit"];
-            this.credit = _data["credit"];
-            this.bpName = _data["bpName"];
-            this.suggestEntryType = _data["suggestEntryType"];
-            this.suggestEntryDesc = _data["suggestEntryDesc"];
-            this.suggestEntryCode = _data["suggestEntryCode"];
-            this.additionalRemarks = _data["additionalRemarks"];
-            this.deductionType = _data["deductionType"];
-            this.balanceDueLC = _data["balanceDueLC"];
-            this.balanceDueSC = _data["balanceDueSC"];
-            this.employee = _data["employee"];
-            this.shortName = _data["shortName"];
-        }
-    }
-
-    static fromJS(data: any): IncomingPaymentsDetails {
-        data = typeof data === 'object' ? data : {};
-        let result = new IncomingPaymentsDetails();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["objType"] = this.objType;
-        data["docEntry"] = this.docEntry;
-        data["lineNum"] = this.lineNum;
-        data["uaddDescription"] = this.uaddDescription;
-        data["uitemCode"] = this.uitemCode;
-        data["branch"] = this.branch;
-        data["itemCode"] = this.itemCode;
-        data["description"] = this.description;
-        data["equipment"] = this.equipment;
-        data["vatGroup"] = this.vatGroup;
-        data["quantity"] = this.quantity;
-        data["uoMCode"] = this.uoMCode;
-        data["discount"] = this.discount;
-        data["unitPrice"] = this.unitPrice;
-        data["lineTotal"] = this.lineTotal;
-        data["grossPrice"] = this.grossPrice;
-        data["grossTotal"] = this.grossTotal;
-        data["serialItem"] = this.serialItem;
-        data["chasisItem"] = this.chasisItem;
-        data["employeeName"] = this.employeeName;
-        data["aPsupport"] = this.aPsupport;
-        data["acctcode"] = this.acctcode;
-        data["lineRemarks"] = this.lineRemarks;
-        data["postingDate"] = this.postingDate;
-        data["dueDate"] = this.dueDate;
-        data["debit"] = this.debit;
-        data["credit"] = this.credit;
-        data["bpName"] = this.bpName;
-        data["suggestEntryType"] = this.suggestEntryType;
-        data["suggestEntryDesc"] = this.suggestEntryDesc;
-        data["suggestEntryCode"] = this.suggestEntryCode;
-        data["additionalRemarks"] = this.additionalRemarks;
-        data["deductionType"] = this.deductionType;
-        data["balanceDueLC"] = this.balanceDueLC;
-        data["balanceDueSC"] = this.balanceDueSC;
-        data["employee"] = this.employee;
-        data["shortName"] = this.shortName;
-
-        return data;
-    }
-}
-export interface IIncomingPaymentsDetails {
-    objType?: string | undefined;
-    docEntry?: number | undefined;
-    lineNum?: number | undefined;
-    uaddDescription?: string | undefined;
-    uitemCode?: string | undefined;
-    branch?: string | undefined;
-    itemCode?: string | undefined;
-    description?: string | undefined;
-    equipment?: string | undefined;
-    vatGroup?: string | undefined;
-    quantity?: number | undefined;
-    uoMCode?: string | undefined;
-    discount?: number | undefined;
-    unitPrice?: number | undefined;
-    lineTotal?: number | undefined;
-    grossPrice?: number | undefined;
-    grossTotal?: number | undefined;
-    acctcode?:string | undefined;
-    BranchName?:string | undefined;
-    lineRemarks?:string | undefined;
-    postingDate?: Date | undefined;
-    dueDate?: Date | undefined;
-    debit?: number | undefined;
-    credit?: number | undefined;
-    bpName?:string | undefined;
-    employee?:string | undefined;
-    shortName?:string | undefined;
-    suggestEntryType?:string | undefined;
-    suggestEntryCode?: string | undefined;
-    suggestEntryDesc?:string | undefined;
-    additionalRemarks?:string | undefined;
-    deductionType?:string | undefined;
-    balanceDueLC?: number | undefined;
-    balanceDueSC?: number | undefined;
-}
-
-export class IncomingPayments implements IncomingPayments {
-    docEntry?: number | undefined;
-    docNum?: number | undefined;
-    cardCode?: string | undefined;
-    cardName?: string | undefined;
-    branch?: number | undefined;
-    branchName?: string | undefined;
-    docDate?: Date | undefined;
-    docDueDate?: Date | undefined;
-    docTotal?: number | undefined;
-    vatSum?: number | undefined;
-    docStatus?: string | undefined;
-    comments?: string | undefined;
-    currency?: string | undefined;
-    address?: string | undefined;
-    numAtCard?: string | undefined;
-    birBaseRef?: string | undefined;
-    transId?: number | undefined;
-    ref1?: number | undefined;
-    ref2?: string | undefined;
-    ref3?: number | undefined;
-    details?: IncomingPaymentsDetails[] | undefined;
-
-    constructor(data?: IIncomingPayments) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.docEntry = _data["docEntry"];
-            this.docNum = _data["docNum"];
-            this.cardCode = _data["cardCode"];
-            this.cardName = _data["cardName"];
-            this.branch = _data["branch"];
-            this.branchName = _data["branchName"];
-            this.docDate = _data["docDate"] ? new Date(_data["docDate"].toString()) : <any>undefined;
-            this.docDueDate = _data["docDueDate"] ? new Date(_data["docDueDate"].toString()) : <any>undefined;
-            this.docTotal = _data["docTotal"];
-            this.vatSum = _data["vatsum"];
-            this.docStatus = _data["docStatus"];
-            this.comments = _data["comments"];
-            this.currency = _data["currency"];
-            this.address = _data["address"];
-            this.numAtCard = _data["numAtCard"];
-            this.birBaseRef = _data["birBaseRef"];
-            this.transId = _data["transId"];
-            this.ref1 = _data["ref1"];
-            this.ref2 = _data["ref2"];
-            this.ref3 = _data["ref3"];
-            
-            if (Array.isArray(_data["details"])) {
-                this.details = [] as any;
-                for (let item of _data["details"])
-                    this.details!.push(IncomingPaymentsDetails.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): IncomingPayments {
-        data = typeof data === 'object' ? data : {};
-        let result = new IncomingPayments();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["docEntry"] = this.docEntry;
-        data["docNum"] = this.docNum;
-        data["cardCode"] = this.cardCode;
-        data["cardName"] = this.cardName;
-        data["branch"] = this.branch;
-        data["branchName"] = this.branchName;
-        data["docDate"] = this.docDate ? this.docDate.toISOString() : <any>undefined;
-        data["docDueDate"] = this.docDueDate ? this.docDueDate.toISOString() : <any>undefined;
-        data["docTotal"] = this.docTotal;
-        data["vatsum"] = this.vatSum;
-        data["docStatus"] = this.docStatus;
-        data["comments"] = this.comments;
-        data["currency"] = this.currency;
-        data["address"] = this.address;
-        data["numAtCard"] = this.numAtCard;
-        data["birBaseRef"] = this.birBaseRef;
-        data["transId"] = this.transId;
-        data["ref1"] = this.ref1;
-        data["ref2"] = this.ref2;
-        data["ref3"] = this.ref3;
-        
-        if (Array.isArray(this.details)) {
-            data["details"] = [];
-            for (let item of this.details)
-                data["details"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface IIncomingPayments {
-    docEntry?: number | undefined;
-    docNum?: number | undefined;
-    cardCode?: string | undefined;
-    cardName?: string | undefined;
-    branch?: number | undefined;
-    branchName?: string | undefined;
-    docDate?: Date | undefined;
-    docDueDate?: Date | undefined;
-    docTotal?: number | undefined;
-    vatSum?: number | undefined;
-    docStatus?: string | undefined;
-    toWarehouse?: string | undefined;
-    comments?: string | undefined;
-    currency?: string | undefined;
-    address?: string | undefined;
-    numAtCard?: string | undefined;
-    birBaseRef?: string | undefined;
-    transId?: number | undefined;
-    ref1?: number | undefined;
-    ref2?: string | undefined;
-    ref3?: number | undefined;
-    details?: IncomingPaymentsDetails[] | undefined;
-}
