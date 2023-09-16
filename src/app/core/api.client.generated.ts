@@ -820,6 +820,7 @@ export class BIRDataDetails implements IBIRDataDetails {
     entryType: string | undefined;
     uCode: string | undefined;
     acctName: string | undefined;
+    instId: number | undefined;
 
     constructor(data?: IBIRDataDetails) {
         if (data) {
@@ -874,6 +875,7 @@ export class BIRDataDetails implements IBIRDataDetails {
             this.entryType = _data["uenttype"];
             this.acctName = _data["acctName"];
             this.uCode = _data["ucode"];
+            this.instId = _data["instId"];
         }
     }
 
@@ -927,6 +929,7 @@ export class BIRDataDetails implements IBIRDataDetails {
         data["acctName"] = this.acctName;
         data["uenttype"] = this.entryType;
         data["ucode"] = this.uCode;
+        data["instId"] = this.instId;
 
         return data;
     }
@@ -975,6 +978,7 @@ export interface IBIRDataDetails {
     entryType: string | undefined;
     uCode: string | undefined;
     acctName: string | undefined;
+    instId: number | undefined;
 }
 
 export class BIRData implements IBIRData {
@@ -998,6 +1002,8 @@ export class BIRData implements IBIRData {
     ref1?: number | undefined;
     ref2?: string | undefined;
     ref3?: number | undefined;
+    doctype: string | undefined;
+
     details?: BIRDataDetails[] | undefined;
 
     constructor(data?: IBIRData) {
@@ -1031,6 +1037,7 @@ export class BIRData implements IBIRData {
             this.ref1 = _data["ref1"];
             this.ref2 = _data["ref2"];
             this.ref3 = _data["ref3"];
+            this.doctype = _data["docType"];
             
             if (Array.isArray(_data["details"])) {
                 this.details = [] as any;
@@ -1069,6 +1076,7 @@ export class BIRData implements IBIRData {
         data["ref1"] = this.ref1;
         data["ref2"] = this.ref2;
         data["ref3"] = this.ref3;
+        data["docType"] = this.doctype;
         
         if (Array.isArray(this.details)) {
             data["details"] = [];
@@ -1101,6 +1109,7 @@ export interface IBIRData {
     ref1?: number | undefined;
     ref2?: string | undefined;
     ref3?: number | undefined;
+    doctype?: string | undefined;
     details?: BIRDataDetails[] | undefined;
 }
 

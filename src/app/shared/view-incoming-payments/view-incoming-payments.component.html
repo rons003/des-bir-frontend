@@ -86,35 +86,90 @@
     <div class="table-responsive" style="margin-bottom: 12px; height: 300px;">
         <table class="table table-sm table-hover table-nowrap">
             <thead class="table-dark">
-                <tr>
-                    <th scope="col" class="text-end" width="5%">#</th>
-                    <th scope="col">Branch</th>
-                    <th scope="col">G/L Account</th>
-                    <th scope="col">Account Name</th>
-                    <th scope="col">Net Amount</th>
-                    <th scope="col">Rebate</th>
-                    <th scope="col">Doc Remarks</th>
-                    <th scope="col">Entry Type</th>
-                    <th scope="col">BP/ Account Name</th>
-                    <th scope="col">Account Code</th>
-                </tr>
+                <ng-template [ngIf]="birdata.doctype == 'S'">
+                    <tr>
+                        <th scope="col" class="text-end" width="5%">#</th>
+                        <th scope="col">Branch</th>
+                        <th scope="col">Doc.#</th>
+                        <th scope="col">Installment</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Posting Date</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Balance Due</th>
+                        <th scope="col">DocRemarks</th>
+                        <th scope="col">Rebate</th>
+                        <th scope="col">Total Payment</th>
+                    </tr>
+                </ng-template>
+                <ng-template [ngIf]="birdata.doctype == 'A'">
+                    <tr>
+                        <th scope="col" class="text-end" width="5%">#</th>
+                        <th scope="col">Branch</th>
+                        <th scope="col">G/L Account</th>
+                        <th scope="col">Account Name</th>
+                        <th scope="col">Net Amount</th>
+                        <th scope="col">Rebate</th>
+                        <th scope="col">Doc Remarks</th>
+                        <th scope="col">Entry Type</th>
+                        <th scope="col">BP/ Account Name</th>
+                        <th scope="col">Account Code</th>
+                    </tr>
+                </ng-template>
             </thead>
             <tbody>
-                <tr *ngFor="let detail of birdata.details; let i = index">
-                    <th class="text-end fw-bold">{{ i + 1 }}</th>
-                    <td>{{ detail.branch }}</td>
-                    <td>{{ detail.acctcode}}</td>
-                    <td>{{ detail.acctName}}</td>   
-                    <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>     
-                    <td>{{ detail.rebate}}</td>    
-                    <td>{{ detail.uaddDescription }}</td>
-                    <td>{{ detail.entryType }}</td>    
-                    <td>{{ detail.bpName }}</td>    
-                    <td>{{ detail.uCode }}</td>  
-                </tr>
+               <ng-template [ngIf]="birdata.doctype == 'A'">
+                    <tr *ngFor="let detail of birdata.details; let i = index">
+                        <th class="text-end fw-bold">{{ i + 1 }}</th>
+                        <td>{{ detail.branch }}</td>
+                        <td>{{ detail.acctcode}}</td>
+                        <td>{{ detail.acctName}}</td>   
+                        <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>     
+                        <td>{{ detail.rebate}}</td>    
+                        <td>{{ detail.uaddDescription }}</td>
+                        <td>{{ detail.entryType }}</td>    
+                        <td>{{ detail.bpName }}</td>    
+                        <td>{{ detail.uCode }}</td>  
+                    </tr>
+                </ng-template>
+                <ng-template [ngIf]="birdata.doctype == 'S'">
+                    <tr *ngFor="let detail of birdata.details; let i = index">
+                        <th class="text-end fw-bold">{{ i + 1 }}</th>
+                        <td>{{ detail.branch }}</td>
+                        <td>{{ ""}}</td>
+                        <td>{{ detail.instId}}</td>    
+                        <td>{{ detail.dueDate}}</td>    
+                        <td>{{ detail.postingDate }}</td>
+                        <td class="text-end fw-bold">PHP {{ detail.grossTotal | number : '1.2-2' }}</td>    
+                        <td>{{ 0 }}</td>    
+                        <td>{{ detail.uaddDescription}}</td>    
+                        <td>{{ detail.rebate}}</td>    
+                        <td>{{ detail.instId }}</td>  
+                    </tr>
+                </ng-template>
             </tbody>
         </table>
     </div>
+    <div class="row flex-row-reverse">
+        <div class="col-md-4">
+            <table class="table table-sm table-hover table-header">
+                <tbody>  
+                    <tr>
+                        <th>Tax</th>
+                        <td class="text-end fw-bold">
+                            PHP {{birdata.vatSum | number : '1.2-2'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Total Payment Due</th>
+                        <td class="text-end fw-bold">
+                            PHP {{birdata.docTotal | number : '1.2-2'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary btn-sm">Print</button>
