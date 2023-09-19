@@ -207,7 +207,9 @@
                                 <th>Internal Doc No.</th>
                                 <th>
                                     <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
-                                        <td> OP Ref No.</td>
+                                        <ng-template [ngIf]="transactionTypeName != 'Incoming Payments'">
+                                            <td> OP Ref No.</td>
+                                        </ng-template>
                                     </ng-template>
                                 </th>
                                 <th>Transaction Type</th>
@@ -225,7 +227,9 @@
                                 <th>{{ transaction.docNum }}</th>
                                 <th>
                                     <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
-                                        <td> {{ transaction.refno }}</td>
+                                        <ng-template [ngIf]="transactionTypeName != 'Incoming Payments'">
+                                            <td> {{ transaction.refno }}</td>
+                                        </ng-template>
                                     </ng-template>
                                 </th>
                                 <td>{{ transactionTypeName }}</td>
