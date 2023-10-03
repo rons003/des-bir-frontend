@@ -375,7 +375,7 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addAPCM(body: number[] | null | undefined): Observable<Response> {
+    addAPCM(body: BIRTransaction | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addAPCM";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1111,5 +1111,43 @@ export interface IBIRData {
     ref3?: number | undefined;
     doctype?: string | undefined;
     details?: BIRDataDetails[] | undefined;
+}
+export class BIRTransaction implements IBIRTransaction {
+    docentry?: string | undefined;
+    postingdate?: Date | undefined;
+
+    constructor(data?: IBIRTransaction) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.docentry = _data["docentry"];
+            this.postingdate = _data["postingdate"];
+        }
+    }
+
+    static fromJS(data: any): BIRTransaction {
+        data = typeof data === 'object' ? data : {};
+        let result = new BIRTransaction();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["docentry"] = this.docentry;
+        data["postingdate"] = this.postingdate;
+        return data;
+    }
+}
+export interface IBIRTransaction {
+    docentry?: string | undefined;
+    postingdate?: Date | undefined;
 }
 

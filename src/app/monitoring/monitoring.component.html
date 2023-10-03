@@ -214,6 +214,7 @@
                                 </th>
                                 <th>Transaction Type</th>
                                 <th>Date</th>
+                                <th>Transaction Date</th>
                                 <th>Total</th>
                                 <th>BIR Status</th>
                                 <th>BIR Remarks</th>
@@ -234,6 +235,7 @@
                                 </th>
                                 <td>{{ transactionTypeName }}</td>
                                 <td>{{ transaction.docDate | date: 'yyyy-MM-dd' }}</td>
+                                <td><input type="date" [(ngModel)]="transaction.docDate"/></td>
                                 <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
                                 <td [ngClass]="">{{ transaction.birStatus }}</td>
                                 <td>{{ transaction.birRemarks }}</td>

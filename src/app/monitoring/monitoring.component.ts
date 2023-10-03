@@ -1,6 +1,6 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbModal, NgbTimeAdapter, NgbTimeStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Service } from '../core/api.client.generated';
+import { BIRData, BIRTransaction, Service } from '../core/api.client.generated';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ViewApInvoiceComponent } from '../shared/view-ap-invoice/view-ap-invoice.component';
@@ -9,6 +9,7 @@ import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downp
 import { ViewOutgoingPaymentsComponent } from '../shared/view-outgoing-payments/view-outgoing-payments.component';
 import { ViewJournalEntryComponent } from '../shared/view-journal-entry/view-journal-entry.component';
 import { ViewIncomingPaymentsComponent } from '../shared/view-incoming-payments/view-incoming-payments.component';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-monitoring',
@@ -24,6 +25,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   birTransactions: any[] = [];
   birTransactionsUploaded: any[] = [];
   birValidation: any[] = [];
+
+  trans_date: Date | undefined;
 
   dpFrom: NgbDateStruct | undefined;
   dpTo: NgbDateStruct | undefined;
@@ -74,11 +77,15 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   Upload() {
-    let transactions: number[] = [];     
+    let transactions: number[] = []; 
+    const bir_transaction = new BIRTransaction;     
     const birTransactions = this.birTransactions.filter(key => key.selected == true);
     birTransactions.forEach((o: any) => {
       transactions.push(o.docEntry)
-
+      
+      bir_transaction.docentry = o.docEntry;
+      bir_transaction.postingdate = this.trans_date = o.docDate;
+      
       if (this.transactionType == 46) {
           this.apiService.bIRValidation(o.docEntry)
           .pipe(
@@ -159,7 +166,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     }
 
     if (this.transactionType == 19) {
-      this.apiService.addAPCM(transactions)
+      this.apiService.addAPCM(bir_transaction)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
