@@ -30,6 +30,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
   dpFrom: NgbDateStruct | undefined;
   dpTo: NgbDateStruct | undefined;
+  dateFrom: Date | undefined;
+  dateTo: Date | undefined;
   transactionType: number = 204;
   transactionTypeName: string | undefined;
   filterType: number = 204;
@@ -57,7 +59,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   getBIRTransactions() {
-    this.apiService.bIRTransactions(this.transactionType)
+    this.apiService.bIRTransactions(this.transactionType, this.dateFrom, this.dateTo)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )
@@ -85,7 +87,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       
       bir_transaction.docentry = o.docEntry;
       bir_transaction.postingdate = this.trans_date = o.docDate;
-      
+
       if (this.transactionType == 46) {
           this.apiService.bIRValidation(o.docEntry)
           .pipe(
@@ -242,6 +244,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   onChangeTransactionType() {
     this.getBIRTransactions();
     this.transactionTypeName = this.transactionTypes.find(o => o.value == this.transactionType)?.label;
+    this.dateFrom = this.dateFrom;
+    this.dateTo = this.dateTo;
   }
 
   onCheckAll() {

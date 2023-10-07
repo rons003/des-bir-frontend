@@ -86,12 +86,16 @@ export class Service {
      * @param objType (optional) 
      * @return Success
      */
-    bIRTransactions(objType: number | null | undefined): Observable<any[]> {
+    bIRTransactions(objType: number | null | undefined, datefrom: Date | null | undefined, dateto: Date | null | undefined): Observable<any[]> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactions?";
         if (objType !== undefined && objType !== null)
             url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
+        if (datefrom !== undefined && datefrom !== null)
+            url_ += "Datefrom=" + encodeURIComponent("" + datefrom) + "&";
+        if (dateto !== undefined && dateto !== null)
+            url_ += "Dateto=" + encodeURIComponent("" + dateto) + "&";
         url_ = url_.replace(/[?&]$/, "");
-
+        
         let options_ : any = {
             observe: "response",
             responseType: "blob",

@@ -193,6 +193,10 @@
                     </select>
                     <label for="floatingSelect">Transaction Type</label>
                 </div>
+                <div>
+                        <td>Date From:<input type="date" [(ngModel)]="dateFrom"/></td>
+                        <td>Date To:<input type="date" [(ngModel)]="dateTo"/></td>
+                </div>
 
             </div>
             <div class="col-sm-8">
@@ -214,7 +218,11 @@
                                 </th>
                                 <th>Transaction Type</th>
                                 <th>Date</th>
-                                <th>Transaction Date</th>
+                                <th>
+                                    <ng-template [ngIf]="transactionTypeName == 'A/P Credit Memo'">
+                                        <td>Transaction Date</td>
+                                    </ng-template>
+                                </th>
                                 <th>Total</th>
                                 <th>BIR Status</th>
                                 <th>BIR Remarks</th>
@@ -235,7 +243,11 @@
                                 </th>
                                 <td>{{ transactionTypeName }}</td>
                                 <td>{{ transaction.docDate | date: 'yyyy-MM-dd' }}</td>
-                                <td><input type="date" [(ngModel)]="transaction.docDate"/></td>
+                                <th>
+                                    <ng-template [ngIf]="transactionTypeName == 'A/P Credit Memo'">
+                                    <td><input type="date" [(ngModel)]="transaction.docDate"/></td>
+                                    </ng-template>
+                                </th>
                                 <th>{{ transaction.docTotal | number: '1.2-2' }}</th>
                                 <td [ngClass]="">{{ transaction.birStatus }}</td>
                                 <td>{{ transaction.birRemarks }}</td>
