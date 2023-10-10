@@ -194,8 +194,8 @@
                     <label for="floatingSelect">Transaction Type</label>
                 </div>
                 <div>
-                        <td>Date From:<input type="date" [(ngModel)]="dateFrom"/></td>
-                        <td>Date To:<input type="date" [(ngModel)]="dateTo"/></td>
+                        <td>Date From:<input type="date" [(ngModel)]="dateFrom" (ngModelChange)="onChangeTransactionType()"/></td>
+                        <td>Date To:<input type="date" [(ngModel)]="dateTo" (ngModelChange)="onChangeTransactionType()"/></td>
                 </div>
 
             </div>
