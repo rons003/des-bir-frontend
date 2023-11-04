@@ -297,6 +297,37 @@ export class Service {
         }));
     }
 
+    addAPDPIEdit(body: BIRTransaction  | null | undefined): Observable<Response> {
+        let url_ = this.baseUrl + "/api/BIRChangedate/addAPDPI";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddAPDPI(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddAPDPI(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Response>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Response>;
+        }));
+    }
+
+
     protected processAddAPDPI(response: HttpResponseBase): Observable<Response> {
         const status = response.status;
         const responseBlob =
@@ -352,6 +383,35 @@ export class Service {
                 return _observableThrow(response_) as any as Observable<Response>;
         }));
     }
+    addAPInvoiceEdit(body: BIRTransaction | null | undefined): Observable<Response> {
+        let url_ = this.baseUrl + "/api/BIRChangedate/addAPInvoice";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddAPInvoice(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddAPInvoice(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Response>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Response>;
+        }));
+    }
 
     protected processAddAPInvoice(response: HttpResponseBase): Observable<Response> {
         const status = response.status;
@@ -379,7 +439,36 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addAPCM(body: BIRTransaction | null | undefined): Observable<Response> {
+    addAPCMEdit(body: BIRTransaction | null | undefined): Observable<Response> {
+        let url_ = this.baseUrl + "/api/BIRChangedate/addAPCM";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddAPCM(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddAPCM(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Response>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Response>;
+        }));
+    }
+    addAPCM(body: number[] | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addAPCM";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -539,6 +628,35 @@ export class Service {
 
     addJournalEntry(body: number[] | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addJournalEntry";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddJournalEntry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddJournalEntry(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Response>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Response>;
+        }));
+    }
+    addJournalEntryEdit(body: BIRTransaction | null | undefined): Observable<Response> {
+        let url_ = this.baseUrl + "/api/BIRChangedate/addJournalEntry";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

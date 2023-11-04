@@ -36,6 +36,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   transactionTypeName: string | undefined;
   filterType: number = 204;
   filterSearch: string = '';
+  canupdate: boolean = false;
   transactionTypes = [
     { value: 204, label: 'A/P Down Payment Invoice' },
     { value: 18, label: 'A/P Invoice' },
@@ -129,7 +130,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     });
     
     if (this.transactionType == 204) {
-      this.apiService.addAPDPI(transactions)
+      if(this.canupdate == true){
+        this.apiService.addAPDPIEdit(bir_transaction)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -146,9 +148,29 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             Swal.close();
           }
         );
+      }else{
+        this.apiService.addAPDPI(transactions)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe(
+          res => {
+            this.getBIRTransactions();
+            Swal.close();
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
+          },
+          error => {
+            Swal.close();
+          }
+        );
+      }
     }
     if (this.transactionType == 18) {
-      this.apiService.addAPInvoice(transactions)
+      if(this.canupdate == true){
+        this.apiService.addAPInvoiceEdit(bir_transaction)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -165,10 +187,30 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             Swal.close();
           }
         );
+      }else{
+        this.apiService.addAPInvoice(transactions)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe(
+          res => {
+            this.getBIRTransactions();
+            Swal.close();
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
+          },
+          error => {
+            Swal.close();
+          }
+        );
+      }
     }
 
     if (this.transactionType == 19) {
-      this.apiService.addAPCM(bir_transaction)
+      if(this.canupdate == true){
+        this.apiService.addAPCMEdit(bir_transaction)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -185,46 +227,83 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             Swal.close();
           }
         );
+      }else{
+        this.apiService.addAPCM(transactions)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe(
+          res => {
+            this.getBIRTransactions();
+            Swal.close();
+            if (res.status == 'success')
+              Swal.fire('Transaction Uploaded!', res.message, 'success');
+            else
+              Swal.fire('Something Error!', res.message, 'error');
+          },
+          error => {
+            Swal.close();
+          }
+        );
+      }
     }
     if (this.transactionType == 24) {
-      
       this.apiService.addIncommingPayments(transactions)
-        .pipe(
-          takeUntil(this.ngUnsubscribe)
-        )
-        .subscribe(
-          res => {
-            this.getBIRTransactions();
-            Swal.close();
-            if (res.status == 'success')
-              Swal.fire('Transaction Uploaded!', res.message, 'success');
-            else
-              Swal.fire('Something Error!', res.message, 'error');
-          },
-          error => {
-            Swal.close();
-          }
-        );
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(
+        res => {
+          this.getBIRTransactions();
+          Swal.close();
+          if (res.status == 'success')
+            Swal.fire('Transaction Uploaded!', res.message, 'success');
+          else
+            Swal.fire('Something Error!', res.message, 'error');
+        },
+        error => {
+          Swal.close();
+        }
+      );
     }
     if (this.transactionType == 30) {
-      
-      this.apiService.addJournalEntry(transactions)
-        .pipe(
-          takeUntil(this.ngUnsubscribe)
-        )
-        .subscribe(
-          res => {
-            this.getBIRTransactions();
-            Swal.close();
-            if (res.status == 'success')
-              Swal.fire('Transaction Uploaded!', res.message, 'success');
-            else
-              Swal.fire('Something Error!', res.message, 'error');
-          },
-          error => {
-            Swal.close();
-          }
-        );
+      if(this.canupdate == true){
+        this.apiService.addJournalEntryEdit(bir_transaction)
+          .pipe(
+            takeUntil(this.ngUnsubscribe)
+          )
+          .subscribe(
+            res => {
+              this.getBIRTransactions();
+              Swal.close();
+              if (res.status == 'success')
+                Swal.fire('Transaction Uploaded!', res.message, 'success');
+              else
+                Swal.fire('Something Error!', res.message, 'error');
+            },
+            error => {
+              Swal.close();
+            }
+          );
+      }else{
+        this.apiService.addJournalEntry(transactions)
+          .pipe(
+            takeUntil(this.ngUnsubscribe)
+          )
+          .subscribe(
+            res => {
+              this.getBIRTransactions();
+              Swal.close();
+              if (res.status == 'success')
+                Swal.fire('Transaction Uploaded!', res.message, 'success');
+              else
+                Swal.fire('Something Error!', res.message, 'error');
+            },
+            error => {
+              Swal.close();
+            }
+          );
+      }
     }
   }
 
