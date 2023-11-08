@@ -1,8 +1,10 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbModal, NgbTimeAdapter, NgbTimeStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BIRData, BIRTransaction, Service } from '../core/api.client.generated';
+import { AuthService } from '../shared/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { ViewApInvoiceComponent } from '../shared/view-ap-invoice/view-ap-invoice.component';
 import { ViewApCreditMemoComponent } from '../shared/view-ap-credit-memo/view-ap-credit-memo.component';
 import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downpayment.component';
@@ -47,8 +49,11 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   ];
   checkAll: boolean = true;
 
+
   constructor(private modalService: NgbModal,
-    private apiService: Service) { }
+    public authService: AuthService,
+    private apiService: Service,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getBIRTransactionsUploaded();
@@ -58,7 +63,17 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
+  checkIsLoggedIn() {
+    this.apiService.validateIsLoggedIn(this.authService.getToken())
+      .subscribe(
+        res => {
+          if (res.status === 'success') {
+            this.authService.logout();
+            this.router.navigate(['login']);
+          }
+        },
+      );
+  }
   getBIRTransactions() {
     this.apiService.bIRTransactions(this.transactionType, this.dateFrom, this.dateTo)
       .pipe(
@@ -83,6 +98,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     let transactions: number[] = []; 
     const bir_transaction = new BIRTransaction;     
     const birTransactions = this.birTransactions.filter(key => key.selected == true);
+    const token = this.authService.getToken();
     birTransactions.forEach((o: any) => {
       transactions.push(o.docEntry)
       
@@ -131,7 +147,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     
     if (this.transactionType == 204) {
       if(this.canupdate == true){
-        this.apiService.addAPDPIEdit(bir_transaction)
+        this.apiService.addAPDPIEdit(bir_transaction, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -149,7 +165,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPDPI(transactions)
+        console.log("hai");
+        this.apiService.addAPDPI(transactions, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )

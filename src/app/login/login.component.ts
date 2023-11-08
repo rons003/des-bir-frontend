@@ -21,6 +21,17 @@ export class LoginComponent implements OnInit {
   returnUrl: string | undefined;
   error = '';
   showPassBtnLabel = 'Show';
+  // licenseIP: string = '172.16.20.250';
+  // licenseIPdata: string | undefined;
+  // address = [
+  //   { value: '172.16.20.235', label: '172.16.20.235' },
+  //   { value: '172.16.20.236', label: '172.16.20.236' },
+  //   { value: '172.16.20.238', label: '172.16.20.238' },
+  //   { value: '172.16.20.239', label: '172.16.20.239' },
+  //   { value: '172.16.20.240', label: '172.16.20.240' },
+  //   { value: '172.16.20.247', label: '172.16.20.247' },
+  //   { value: '172.16.20.250', label: '172.16.20.250' }
+  // ];
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -34,7 +45,10 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
   }
-
+  // onSelectAddress() {
+  //   this.licenseIPdata = this.address.find(o => o.value == this.licenseIP)?.label;
+  //   console.log(this.licenseIP);
+  // }
   showPassword(input: any): any {
     input.type = input.type === 'password' ? 'text' : 'password';
   }
@@ -54,6 +68,7 @@ export class LoginComponent implements OnInit {
     credential.company = this.f.company.value?.toString();
     credential.userName = this.f.username.value?.toString();
     credential.password = this.f.password.value?.toString();
+    // credential.address = this.licenseIPdata;
     this.apiService.login(credential)
       .subscribe(
         response => {

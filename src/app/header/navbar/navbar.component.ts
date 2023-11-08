@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { AuthService } from 'src/app/shared/auth.service';
+import { Service } from 'src/app/core/api.client.generated';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,9 @@ export class NavbarComponent implements OnInit {
   public isMenuCollapsed = true;
   userName: string = '';
   constructor(
-    // public authService: AuthService,
-    private router: Router
+    public authService: AuthService,
+    private router: Router,
+    private apiService: Service
   ) { }
 
   ngOnInit(): void {
@@ -20,8 +22,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    // this.authService.logout();
-    this.router.navigate(['login']);
+
+        this.authService.logout();
+        this.router.navigate(['login']);
+
   }
 
 }

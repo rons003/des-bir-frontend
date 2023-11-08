@@ -7,19 +7,25 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'apv',
     component: MonitoringComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { title: 'Monitoring Page' }
   },
   {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [LoginGuard],
+    canActivate: [LoginGuard],
     data: {
       title: 'Login Page'
     }
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/apv',
+    pathMatch: 'full'
+  },
+  { path: '**', component: MonitoringComponent }
 ];
 
 @NgModule({
