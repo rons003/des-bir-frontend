@@ -198,7 +198,11 @@
                         <td>Date To:<input type="date" [(ngModel)]="dateTo" (ngModelChange)="onChangeTransactionType()"/></td>
                 </div>
                 <div>
-                    <td><input [(ngModel)]="canupdate" id="canupdate" required type="checkbox"/>Can Update date</td>
+                    <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
+                        <ng-template [ngIf]="transactionTypeName != 'Incoming Payments'">
+                            <td><input [(ngModel)]="canupdate" id="canupdate" required type="checkbox"/>Can Update date</td>
+                        </ng-template>
+                    </ng-template>
                 </div>
 
             </div>
@@ -247,8 +251,12 @@
                                 <td>{{ transactionTypeName }}</td>
                                 <td>{{ transaction.docDate | date: 'yyyy-MM-dd' }}</td>
                                 <th>
-                                    <ng-template [ngIf]="canupdate == true">
-                                    <td><input type="date" [(ngModel)]="transaction.docDate"/></td>
+                                    <ng-template [ngIf]="transactionTypeName != 'Outgoing Payments'">
+                                        <ng-template [ngIf]="transactionTypeName != 'Incoming Payments'">
+                                            <ng-template [ngIf]="canupdate == true">
+                                                <td><input type="date" [(ngModel)]="transaction.docDate"/></td>
+                                            </ng-template>
+                                        </ng-template>
                                     </ng-template>
                                 </th>
                                 <th>{{ transaction.docTotal | number: '1.2-2' }}</th>

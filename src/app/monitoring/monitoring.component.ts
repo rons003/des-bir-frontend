@@ -115,7 +115,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             this.birValidation = res;
             if(this.birValidation.length == 1){
 
-              this.apiService.addOutgoingPayments(transactions)
+              this.apiService.addOutgoingPayments(transactions, token)
               .pipe(
                 takeUntil(this.ngUnsubscribe)
               )
@@ -165,7 +165,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        console.log("hai");
         this.apiService.addAPDPI(transactions, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
@@ -187,7 +186,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     }
     if (this.transactionType == 18) {
       if(this.canupdate == true){
-        this.apiService.addAPInvoiceEdit(bir_transaction)
+        this.apiService.addAPInvoiceEdit(bir_transaction, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -205,7 +204,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPInvoice(transactions)
+        this.apiService.addAPInvoice(transactions, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -227,7 +226,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
     if (this.transactionType == 19) {
       if(this.canupdate == true){
-        this.apiService.addAPCMEdit(bir_transaction)
+        this.apiService.addAPCMEdit(bir_transaction, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -245,7 +244,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPCM(transactions)
+        this.apiService.addAPCM(transactions, token)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -265,7 +264,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       }
     }
     if (this.transactionType == 24) {
-      this.apiService.addIncommingPayments(transactions)
+      this.apiService.addIncommingPayments(transactions, token)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )
@@ -285,7 +284,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     }
     if (this.transactionType == 30) {
       if(this.canupdate == true){
-        this.apiService.addJournalEntryEdit(bir_transaction)
+        this.apiService.addJournalEntryEdit(bir_transaction, token)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
@@ -303,7 +302,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             }
           );
       }else{
-        this.apiService.addJournalEntry(transactions)
+        this.apiService.addJournalEntry(transactions, token)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
