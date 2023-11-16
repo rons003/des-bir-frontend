@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 import { BIRData, Service } from '../core/api.client.generated';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-view-ap-downpayment',
@@ -14,14 +15,17 @@ export class ViewApDownpaymentComponent implements OnInit {
   docNum: number = 0;
   internal: boolean = false;
   transactionType = 204;
+  branch: string = "";
   constructor(private apiService: Service,
+    public authService: AuthService,
     private activeModal: NgbActiveModal) { }
     
     ngOnInit(): void {
       this.getBIRData();
     }
     getBIRData(){
-      this.apiService.bir_data(this.transactionType,this.docNum, this.internal)
+      this.branch = this.authService.getDB();
+      this.apiService.bir_data(this.transactionType,this.docNum, this.internal, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )

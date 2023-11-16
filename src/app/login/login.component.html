@@ -2,18 +2,17 @@
     <div class="d-flex justify-content-center">
         <div class="card" style="width: 70rem;" style="margin-top: 5rem;">
             <div class="card-body">
-                <!-- <div class="text-center" style="margin-bottom: 1rem;">
-                    <img src="assets/img/des_logo.png" class="img-fluid" width="480px" height="280px"/>
-                </div> -->
+                <div class="text-center" style="margin-bottom: 1rem;">
+                    <img src="assets/img/rpo_logo_v2.svg" class="img-fluid" width="480px" height="280px"/>
+                </div>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                    <!-- <div *ngIf="error" class="alert alert-danger">{{error}}</div> -->
-                     <!-- <div class="form-floating">
-                        <label form="floatingSelect">Address</label>
-                        <select class="form-select" id="floatingSelect" [(ngModel)]="licenseIP"
-                        (ngModelChange)="onSelectAddress()">
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <select class="form-select" id="floatingSelect" formControlName="licenseIPdata">
                         <option *ngFor="let o of address" [value]="o.value">{{ o.label }}</option>
                         </select>
-                    </div> -->
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Database</label>
                         <select class="form-select" formControlName="company">
@@ -21,19 +20,44 @@
                             <option value="desmhofcbir">DES-MARKETING BIR</option>
                           </select>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label class="form-label">Username</label>
                         <input type="text" class="form-control" formControlName="username">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" formControlName="password">
-                    </div>
-                    <!-- <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input">
-                        <label class="form-check-label">Show Password</label>
                     </div> -->
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        </div>
+                        <input type="text" formControlName="username" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Username">
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors?.[required]">Username is required</div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        </div>
+                        <input #inputPass type="password" formControlName="password" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" (click)="showPassword(inputPass)"><i
+                                    [ngClass]="inputPass.type == 'password' ? 'bi bi-eye' : 'bi bi-eye-slash'"></i></button>
+                        </div>
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors?.[required]">Password is required</div>
+                        </div>
+                    </div>
+
+                    <button [disabled]="loading" type="submit" class="btn btn-primary btn-block"
+                        style="margin-top: 2rem;">Login
+                        <img *ngIf="loading"
+                            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    </button>
                 </form>
             </div>
         </div>

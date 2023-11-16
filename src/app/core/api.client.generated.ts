@@ -89,7 +89,7 @@ export class Service {
      * @param objType (optional) 
      * @return Success
      */
-    bIRTransactions(objType: number | null | undefined, datefrom: Date | null | undefined, dateto: Date | null | undefined): Observable<any[]> {
+    bIRTransactions(objType: number | null | undefined, datefrom: Date | null | undefined, dateto: Date | null | undefined, branch: string | null | undefined): Observable<any[]> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactions?";
         if (objType !== undefined && objType !== null)
             url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
@@ -97,6 +97,8 @@ export class Service {
             url_ += "Datefrom=" + encodeURIComponent("" + datefrom) + "&";
         if (dateto !== undefined && dateto !== null)
             url_ += "Dateto=" + encodeURIComponent("" + dateto) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
         
         let options_ : any = {
@@ -155,12 +157,14 @@ export class Service {
      * @param search (optional) 
      * @return Success
      */
-    bIRTransactionsUploaded(objType: number | null | undefined, search: string | null | undefined): Observable<any[]> {
+    bIRTransactionsUploaded(objType: number | null | undefined, search: string | null | undefined, branch: string | null | undefined): Observable<any[]> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactionsUploaded?";
         if (objType !== undefined && objType !== null)
             url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
         if (search !== undefined && search !== null)
             url_ += "Search=" + encodeURIComponent("" + search) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -213,13 +217,15 @@ export class Service {
         }
         return _observableOf(null as any);
     }
-    bir_data(objType: number, id: number, internal: boolean): Observable<BIRData> {
+    bir_data(objType: number, id: number, internal: boolean, branch: string): Observable<BIRData> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactionsID?";
         if (objType !== undefined && objType !== null)
             url_ += "ObjType=" + encodeURIComponent("" + objType) + "&";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
             url_ += "id="+ encodeURIComponent("" + id)+ "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ += "Internal="+ encodeURIComponent("" + internal);
 
         let options_ : any = {
@@ -729,10 +735,12 @@ export class Service {
         return _observableOf(null as any);
     }
      
-    bIRValidation (id: number | null | undefined): Observable<any[]> {
+    bIRValidation (id: number | null | undefined, branch: string | null | undefined): Observable<any[]> {
         let url_ = this.baseUrl + "/api/BIRTransaction/BIRTransactionsValidation?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
     
         let options_ : any = {
@@ -842,6 +850,7 @@ export class Service {
 }
 
 export class Credentials implements ICredentials {
+    address?: string | undefined;
     company?: string | undefined;
     userName?: string | undefined;
     password?: string | undefined;
@@ -857,6 +866,7 @@ export class Credentials implements ICredentials {
 
     init(_data?: any) {
         if (_data) {
+            this.address = _data["address"]
             this.company = _data["company"];
             this.userName = _data["userName"];
             this.password = _data["password"];
@@ -872,6 +882,7 @@ export class Credentials implements ICredentials {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["address"] = this.address;
         data["company"] = this.company;
         data["userName"] = this.userName;
         data["password"] = this.password;
@@ -880,6 +891,7 @@ export class Credentials implements ICredentials {
 }
 
 export interface ICredentials {
+    address?: string | undefined;
     company?: string | undefined;
     userName?: string | undefined;
     password?: string | undefined;

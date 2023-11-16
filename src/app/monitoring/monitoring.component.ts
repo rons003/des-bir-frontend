@@ -29,6 +29,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   birValidation: any[] = [];
 
   trans_date: Date | undefined;
+  branch: string | undefined;
 
   dpFrom: NgbDateStruct | undefined;
   dpTo: NgbDateStruct | undefined;
@@ -56,6 +57,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.checkIsLoggedIn();
     this.getBIRTransactionsUploaded();
   }
 
@@ -75,7 +77,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       );
   }
   getBIRTransactions() {
-    this.apiService.bIRTransactions(this.transactionType, this.dateFrom, this.dateTo)
+    this.branch = this.authService.getDB();
+    this.apiService.bIRTransactions(this.transactionType, this.dateFrom, this.dateTo, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )
@@ -85,7 +88,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   getBIRTransactionsUploaded() {
-    this.apiService.bIRTransactionsUploaded(this.filterType, this.filterSearch)
+    this.branch = this.authService.getDB();
+    this.apiService.bIRTransactionsUploaded(this.filterType, this.filterSearch, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )
@@ -99,6 +103,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     const bir_transaction = new BIRTransaction;     
     const birTransactions = this.birTransactions.filter(key => key.selected == true);
     const token = this.authService.getToken();
+    console.log(this.authService.getToken());
     birTransactions.forEach((o: any) => {
       transactions.push(o.docEntry)
       
@@ -106,7 +111,8 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       bir_transaction.postingdate = this.trans_date = o.docDate;
 
       if (this.transactionType == 46) {
-          this.apiService.bIRValidation(o.docEntry)
+          this.branch = this.authService.getDB();
+          this.apiService.bIRValidation(o.docEntry, this.branch)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
