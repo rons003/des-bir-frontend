@@ -11,6 +11,7 @@ import { ViewApDownpaymentComponent } from '../view-ap-downpayment/view-ap-downp
 import { ViewOutgoingPaymentsComponent } from '../shared/view-outgoing-payments/view-outgoing-payments.component';
 import { ViewJournalEntryComponent } from '../shared/view-journal-entry/view-journal-entry.component';
 import { ViewIncomingPaymentsComponent } from '../shared/view-incoming-payments/view-incoming-payments.component';
+import { NavbarService } from '../services/navbar.service';
 import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
@@ -40,6 +41,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   filterType: number = 204;
   filterSearch: string = '';
   canupdate: boolean = false;
+  user: string = '';
   transactionTypes = [
     { value: 204, label: 'A/P Down Payment Invoice' },
     { value: 18, label: 'A/P Invoice' },
@@ -49,19 +51,29 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     { value: 46, label: 'Outgoing Payments' },
   ];
   checkAll: boolean = true;
+  subscription: any;
+  showNavbar: boolean = true;
 
 
   constructor(private modalService: NgbModal,
     public authService: AuthService,
     private apiService: Service,
-    private router: Router) { }
+    private router: Router,
+    private navbarService: NavbarService) { 
+      this.subscription = this.navbarService.showNavbar.subscribe((value)=>{
+        this.showNavbar =value;
+      })
+    }
 
   ngOnInit(): void {
+    this.user = this.authService.getUserName();
+    this.branch = this.authService.getDB();
     this.checkIsLoggedIn();
     this.getBIRTransactionsUploaded();
   }
 
   ngOnDestroy(): void {
+    // this.navbarService.display();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -77,7 +89,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       );
   }
   getBIRTransactions() {
-    this.branch = this.authService.getDB();
     this.apiService.bIRTransactions(this.transactionType, this.dateFrom, this.dateTo, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
@@ -88,7 +99,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
 
   getBIRTransactionsUploaded() {
-    this.branch = this.authService.getDB();
     this.apiService.bIRTransactionsUploaded(this.filterType, this.filterSearch, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
@@ -111,7 +121,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       bir_transaction.postingdate = this.trans_date = o.docDate;
 
       if (this.transactionType == 46) {
-          this.branch = this.authService.getDB();
           this.apiService.bIRValidation(o.docEntry, this.branch)
           .pipe(
             takeUntil(this.ngUnsubscribe)
@@ -119,9 +128,15 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           .subscribe(
             async res => {
             this.birValidation = res;
+            const data =  this.birValidation;
+            let status: string[] = [];  
+            data.forEach((o: any) => {
+              status.push(o.status);
+            });
+            console.log(status);    
             if(this.birValidation.length == 1){
 
-              this.apiService.addOutgoingPayments(transactions, token)
+              this.apiService.addOutgoingPayments(transactions, token,  this.branch)
               .pipe(
                 takeUntil(this.ngUnsubscribe)
               )
@@ -153,7 +168,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     
     if (this.transactionType == 204) {
       if(this.canupdate == true){
-        this.apiService.addAPDPIEdit(bir_transaction, token)
+        this.apiService.addAPDPIEdit(bir_transaction, token,  this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -171,7 +186,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPDPI(transactions, token)
+        this.apiService.addAPDPI(transactions, token, this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -192,7 +207,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     }
     if (this.transactionType == 18) {
       if(this.canupdate == true){
-        this.apiService.addAPInvoiceEdit(bir_transaction, token)
+        this.apiService.addAPInvoiceEdit(bir_transaction, token, this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -210,7 +225,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPInvoice(transactions, token)
+        this.apiService.addAPInvoice(transactions, token, this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -232,7 +247,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
     if (this.transactionType == 19) {
       if(this.canupdate == true){
-        this.apiService.addAPCMEdit(bir_transaction, token)
+        this.apiService.addAPCMEdit(bir_transaction, token, this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -250,7 +265,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           }
         );
       }else{
-        this.apiService.addAPCM(transactions, token)
+        this.apiService.addAPCM(transactions, token, this.branch)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
@@ -270,7 +285,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       }
     }
     if (this.transactionType == 24) {
-      this.apiService.addIncommingPayments(transactions, token)
+      this.apiService.addIncommingPayments(transactions, token, this.branch)
       .pipe(
         takeUntil(this.ngUnsubscribe)
       )
@@ -290,7 +305,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     }
     if (this.transactionType == 30) {
       if(this.canupdate == true){
-        this.apiService.addJournalEntryEdit(bir_transaction, token)
+        this.apiService.addJournalEntryEdit(bir_transaction, token, this.branch)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
@@ -308,7 +323,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             }
           );
       }else{
-        this.apiService.addJournalEntry(transactions, token)
+        this.apiService.addJournalEntry(transactions, token, this.branch)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
@@ -376,7 +391,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       showDenyButton: true,
       confirmButtonText: 'Yes',
       denyButtonText: `No`,
-    }).then((result) => {
+    }).then((result: { isConfirmed: any; isDenied: any; }) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.showLoading();

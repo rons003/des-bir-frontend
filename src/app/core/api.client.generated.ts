@@ -276,10 +276,12 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addAPDPI(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPDPI(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addAPDPI?";
         if (token !== undefined)
-            url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(body);
 
@@ -307,10 +309,12 @@ export class Service {
         }));
     }
 
-    addAPDPIEdit(body: BIRTransaction  | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPDPIEdit(body: BIRTransaction  | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRChangedate/addAPDPI?";
         if (token !== undefined)
-            url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -366,10 +370,12 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addAPInvoice(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPInvoice(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addAPInvoice?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -397,10 +403,12 @@ export class Service {
                 return _observableThrow(response_) as any as Observable<Response>;
         }));
     }
-    addAPInvoiceEdit(body: BIRTransaction | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPInvoiceEdit(body: BIRTransaction | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRChangedate/addAPInvoice?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -455,10 +463,12 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addAPCMEdit(body: BIRTransaction | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPCMEdit(body: BIRTransaction | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRChangedate/addAPCM?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -486,10 +496,12 @@ export class Service {
                 return _observableThrow(response_) as any as Observable<Response>;
         }));
     }
-    addAPCM(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addAPCM(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addAPCM?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -544,10 +556,12 @@ export class Service {
      * @param body (optional) 
      * @return Success
      */
-    addOutgoingPayments(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addOutgoingPayments(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addOutgoingPayments?";
         if (token !== undefined)
-            url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -597,10 +611,12 @@ export class Service {
         }
         return _observableOf(null as any);
     }
-    addIncommingPayments(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addIncommingPayments(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addIncommingPayments?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -650,10 +666,12 @@ export class Service {
         return _observableOf(null as any);
     }
 
-    addJournalEntry(body: number[] | null | undefined, token: string | null | undefined): Observable<Response> {
+    addJournalEntry(body: number[] | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRTransaction/addJournalEntry?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -681,10 +699,12 @@ export class Service {
                 return _observableThrow(response_) as any as Observable<Response>;
         }));
     }
-    addJournalEntryEdit(body: BIRTransaction | null | undefined, token: string | null | undefined): Observable<Response> {
+    addJournalEntryEdit(body: BIRTransaction | null | undefined, token: string | null | undefined, branch: string | null | undefined): Observable<Response> {
         let url_ = this.baseUrl + "/api/BIRChangedate/addJournalEntry?";
         if (token !== undefined)
             url_ += "token=" + encodeURIComponent("" + token) + "&"; 
+        if (branch !== undefined && branch !== null)
+            url_ += "branch=" + encodeURIComponent("" + branch) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     { value: '172.16.20.240', label: '172.16.20.240' },
     { value: '172.16.20.247', label: '172.16.20.247' },
     { value: '172.16.20.250', label: '172.16.20.250' },
-    { value: '172.16.40.133', label: '172.16.40.133' }
+    { value: '172.16.40.30', label: '172.16.40.30' }
   ];
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.logout();
 
     // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   // onSelectAddress() {
   //   this.licenseIPdata = this.address.find(o => o.value == this.licenseIP)?.label;
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               showConfirmButton: false,
               timer: 3000,
               timerProgressBar: true,
-              didOpen: (toast) => {
+              didOpen: (toast: { addEventListener: (arg0: string, arg1: any) => void; }) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
               }

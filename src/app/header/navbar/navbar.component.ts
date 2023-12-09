@@ -13,6 +13,9 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class NavbarComponent implements OnInit, OnDestroy{
   public isMenuCollapsed = true;
   userName: string = '';
+  dbName: string = '';
+  extDESIHO: string = 'zzTEST_EXT';
+  extDESMHO: string = 'zzTEST_EXTDESMHO';
   showNavbar: boolean = true;
   subscription: Subscription;
   constructor(
@@ -30,6 +33,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    this.dbName = this.authService.getDB();
+    console.log(this.authService.getDB());
     // this.userName = this.authService.getUserName();
   }
 

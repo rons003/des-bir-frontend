@@ -4,9 +4,16 @@
 			SAP-BIR Integration</a>
 
 		<form class="d-flex">
-			<span class="navbar-text">
-				EXTERNAL DU EK SAM INC. BIR
-			</span>
+			<ng-template [ngIf]="this.dbName == this.extDESIHO">
+				<span class="navbar-text">
+					EXTERNAL DU EK SAM INC. BIR
+				</span>
+			</ng-template>
+			<ng-template [ngIf]="this.dbName == this.extDESMHO">
+				<span class="navbar-text">
+					EXTERNAL DES MARKETING, INC. BIR
+				</span>
+			</ng-template>
 			<button type="button" class="btn btn-link" (click)="logout()">Log Out</button>
 		</form>
 
